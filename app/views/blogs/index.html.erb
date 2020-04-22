@@ -1,0 +1,4 @@
+<% @blogs.each do |blog| %>
+  <h2><%= link_to blog.title, blog_url(blog) %></h2>
+  <div><%= blog.created_at %></div>
+<% end %>
