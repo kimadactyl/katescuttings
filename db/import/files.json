@@ -1,8 +1,4 @@
 [
-{"type":"header","version":"4.9.3","comment":"Export to JSON plugin for PHPMyAdmin"},
-{"type":"database","name":"kates_cuttings"},
-{"type":"table","name":"node","database":"kates_cuttings","data":
-[
 {"entity_id":"1","fid":"219","filename":"Tulips May 2011_5828607946_l.jpg"},
 {"entity_id":"1","fid":"163","filename":"Pine tree spring bed 2010_4582159046_l.jpg"},
 {"entity_id":"2","fid":"197","filename":"Salvia purple rain_4215996183_l.jpg"},
@@ -247,6 +243,4 @@
 {"entity_id":"164","fid":"490","filename":"IMG_1484.JPG"},
 {"entity_id":"165","fid":"491","filename":"IMG_1090 (Medium).JPG"},
 {"entity_id":"166","fid":"495","filename":"pinus.JPG"}
-]
-}
 ]

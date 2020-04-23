@@ -17,8 +17,15 @@
 <aside class="almanac">
   <% @almanac.each do |year| %>
     <h3><%= year.first %></h3>
-    <% year.second.each do |month| %>
-      <h4><%= month.first.second %></h4>
-    <% end %>
+    <div class="almanac__year">
+      <% year.second.each do |month| %>
+        <div class="almanac__month">
+          <h4><%= month.first.second %></h4>
+          <% if month.second[0].images[0] %>
+            <%= image_tag month.second[0].images[0].variant(resize_to_limit: [100, 100]) %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   <% end %>
 </aside>

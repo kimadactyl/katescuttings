@@ -1,0 +1,17 @@
+@import "variables";
+
+.almanac {
+  font-family: $garamond;
+  text-transform: uppercase;
+  &__year {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  h3, h4 {
+    font-weight: 400;
+  }
+  h3 {
+    font-size: 2.5714rem;
+    margin-bottom: 0;
+  }
+}
