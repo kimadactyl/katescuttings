@@ -1,0 +1,12 @@
+.header {
+  &__title {
+    text-indent: -9999px;
+    width: 341px;
+    height: 81px;
+    background-image: image-url('icons/logo-text.png');
+    background-size: 341px 81px;
+    background-repeat: no-repeat;
+    margin: 2rem 1rem 1.5rem;
+    box-sizing: border-box;
+  }
+}

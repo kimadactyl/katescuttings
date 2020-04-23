@@ -1,0 +1,14 @@
+@import "variables";
+
+.date {
+  font-family: $garamond;
+  font-size: 0.7143rem;
+  color: $light-grey;
+  text-align: center;
+  background: linear-gradient(to bottom, $background-inner calc(50% - 0.5px), $light-grey calc(50% - 0.5px) calc(50% + 0.5px), $background-inner calc(50% + 0.5px));
+  span {
+    background-color: $background-inner;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}

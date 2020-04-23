@@ -2,13 +2,9 @@
 
 html {
   font-family: $georgia;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: $background-outer;
-}
-
-body {
-  background: $background-inner;
 }
 
 h1, h2 {
@@ -26,4 +22,11 @@ h1 {
 
 h2 {
   font-size: 1.8571rem;
+}
+
+a {
+  color: $primary;
+  &:hover {
+    text-decoration: none;
+  }
 }

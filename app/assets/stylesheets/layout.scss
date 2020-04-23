@@ -1,0 +1,15 @@
+@import "variables";
+
+html {
+  background: $background-outer;
+}
+
+body {
+  background: $background-inner;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  margin: 1rem;
+}

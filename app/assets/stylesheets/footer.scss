@@ -1,0 +1,25 @@
+@import "variables";
+
+footer {
+  background-color: $primary;
+  color: white;
+  padding: 0.5rem 1rem 1rem;
+  h5 {
+    text-transform: uppercase;
+    font-size: 1.07rem;
+    font-weight: 400;
+    margin: 1rem 0;
+  }
+  ul {
+    margin: 0;
+    padding: 0 1rem;
+  }
+  a {
+    color: white;
+  }
+}
+
+.footer__created {
+  text-align: right;
+  padding-top: 2rem;
+}

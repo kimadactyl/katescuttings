@@ -1,12 +1,24 @@
 <div class="teasers">
-  <% @blogs.each do |blog| %>
-    <div class="teaser">
-      <div class="teaser__date"><span><%= blog.created_at %></span></div>
-      <h2 class="teaser__title"><%= link_to blog.title, blog_url(blog) %></h2>
-      <div class="teaser__body">
-        <%= blog.body.truncate(600, separator: "\n", omission: '') %>
-        <%= link_to "Read more…", blog_url(blog), class: "teaser__more" %>
-      </div>
-    </div>
+  <% @blogs.each do |month| %>
+    <h3 class="teaser__month"><%= month[0] %></h3>
+    <% month[1].each do |blog| %>
+      <article class="teaser">
+        <div class="date"><span><%= blog.formatted_date %></span></div>
+        <h2 class="teaser__title"><%= link_to blog.title, blog_url(blog) %></h2>
+        <div class="teaser__body">
+          <%= blog.body.truncate(600, separator: "\n", omission: '') %>
+          <%= link_to "Read more…", blog_url(blog), class: "teaser__more" %>
+        </div>
+      </article>
+    <% end %>
   <% end %>
 </div>
+
+<aside class="almanac">
+  <% @almanac.each do |year| %>
+    <h3><%= year.first %></h3>
+    <% year.second.each do |month| %>
+      <h4><%= month.first.second %></h4>
+    <% end %>
+  <% end %>
+</aside>
