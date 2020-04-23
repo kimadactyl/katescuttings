@@ -1,4 +1,12 @@
-<% @blogs.each do |blog| %>
-  <h2><%= link_to blog.title, blog_url(blog) %></h2>
-  <div><%= blog.created_at %></div>
-<% end %>
+<div class="teasers">
+  <% @blogs.each do |blog| %>
+    <div class="teaser">
+      <div class="teaser__date"><span><%= blog.created_at %></span></div>
+      <h2 class="teaser__title"><%= link_to blog.title, blog_url(blog) %></h2>
+      <div class="teaser__body">
+        <%= blog.body.truncate(600, separator: "\n", omission: '') %>
+        <%= link_to "Read more…", blog_url(blog), class: "teaser__more" %>
+      </div>
+    </div>
+  <% end %>
+</div>

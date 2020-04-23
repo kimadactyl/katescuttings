@@ -1,0 +1,29 @@
+@import "variables";
+
+html {
+  font-family: $georgia;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: $background-outer;
+}
+
+body {
+  background: $background-inner;
+}
+
+h1, h2 {
+  font-style: italic;
+  font-weight: 400;
+  a {
+    text-decoration: none;
+    color: $dark-grey;
+  }
+}
+
+h1 {
+  font-size: 2.2857rem;
+}
+
+h2 {
+  font-size: 1.8571rem;
+}
