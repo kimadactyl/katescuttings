@@ -3,5 +3,9 @@
 
   <h1><%= @blog.title %></h1>
 
+  <% @blog.images.each do |image| %>
+    <%= image_tag image.variant(resize_to_fill: [200, 200]) %>
+  <% end %>
+
   <%= markdown @blog.body %>
 </article>

@@ -1,5 +1,5 @@
 <div class="teasers">
-  <% @blogs.each do |month| %>
+  <% @grouped_blogs.each do |month| %>
     <h3 class="teaser__month"><%= month[0] %></h3>
     <% month[1].each do |blog| %>
       <article class="teaser">
@@ -12,6 +12,8 @@
       </article>
     <% end %>
   <% end %>
+
+  <%= paginate @blogs %>
 </div>
 
 <aside class="almanac">
@@ -22,7 +24,7 @@
         <div class="almanac__month">
           <h4><%= month.first.second %></h4>
           <% if month.second[0].images[0] %>
-            <%= image_tag month.second[0].images[0].variant(resize_to_limit: [100, 100]) %>
+            <%= image_tag month.second[0].images[0].variant(resize_to_fill: [200, 200]) %>
           <% end %>
         </div>
       <% end %>

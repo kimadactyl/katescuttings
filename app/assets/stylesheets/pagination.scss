@@ -1,0 +1,23 @@
+@import "variables";
+
+.pagination {
+  span {
+    display: inline-block;
+    border: 1px solid $medium-grey;
+  }
+  a {
+    text-decoration: none;
+    color: $medium-grey;
+    display: block;
+  }
+  a, .gap, .current {
+    padding: 0.25rem 0.5rem;
+  }
+  .current, .page:hover a {
+    background: $medium-grey;
+    color: $white;
+    a {
+      color: $white;
+    }
+  }
+}

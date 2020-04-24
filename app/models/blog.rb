@@ -2,10 +2,7 @@ class Blog < ApplicationRecord
   validates :title, presence: true
   has_many_attached :images
 
-  def self.teasers_sorted_by_month(idx = 0)
-    blogs = Blog.order(created_at: :desc).limit(10).offset(idx)
-    blogs.group_by { |b| b.created_at.strftime '%B %Y' }
-  end
+  scope :teasers, -> { order(created_at: :desc) }
 
   def self.almanac
     # Get all blogs in reverse date order
