@@ -1,0 +1,19 @@
+<% cache @almanac do %>
+  <aside class="layout__aside almanac">
+    <% @almanac.each do |year| %>
+      <h3><%= year[0] %></h3>
+      <div class="almanac__year">
+        <% year[1].each do |month| %>
+          <div class="almanac__month">
+            <%= link_to blogs_path(year: year[0], month: month[0][1]) do %>
+              <h4><%= Date::MONTHNAMES[month[0][1].to_i] %></h4>
+              <% if month[1][0].images[0] %>
+                <%= image_tag month[1][0].images[0].variant(resize_to_fill: [300, 300]) %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </aside>
+<% end %>

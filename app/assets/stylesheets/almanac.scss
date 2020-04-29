@@ -29,4 +29,13 @@
     width: 100%;
     max-width: 100%;
   }
+  a {
+    text-decoration: none;
+    &:hover {
+      img {
+        transform: scale(1.1);
+        transition: all 0.25s;
+      }
+    }
+  }
 }
