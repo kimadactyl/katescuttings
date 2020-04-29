@@ -15,13 +15,13 @@ body {
     border-color: $light-grey;
   }
   @include for-desktop-up {
-    max-width: 1200px;
+    max-width: 1150px;
     margin: 0 auto;
   }
 }
 
 main {
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 2rem;
   @include gutters;
 }
@@ -30,6 +30,19 @@ main {
   @include for-tablet-landscape-up {
     display: grid;
     grid-template-columns: 3fr 2fr;
-    grid-gap: 3rem;
+    grid-gap: $page-gutter-landscape;
+  }
+  @include for-desktop-up {
+    grid-gap: $page-gutter-desktop;
+  }
+}
+
+aside.page {
+  margin-top: 7rem;
+}
+
+aside.garden {
+  img {
+    margin-bottom: 3rem;
   }
 }

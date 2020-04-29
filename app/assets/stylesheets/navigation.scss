@@ -1,12 +1,12 @@
 @import "variables";
 
 .navigation {
-  margin: 0 -2px;
   background-color: $primary;
   ul {
     @include gutters;
     padding: 0.75rem 0;
-    margin: 0;
+    margin-top: 0;
+    margin-bottom: 0;
     list-style-type: none;
     display: flex;
     justify-content: space-between;
@@ -22,9 +22,22 @@
     font-style: italic;
   }
   @include for-tablet-portrait-up {
-    justify-content: start;
+    margin: 0 -2px;
+    ul {
+      justify-content: flex-start;
+    }
     li {
-      margin-right: 2rem;
+      margin-right: 1.5rem;
+      &:after {
+        content: '•';
+        color: $white;
+        padding-left: 1.5rem;
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+      }
+      &:last-child:after {
+        display: none;
+      }
     }
   }
   @include for-desktop-up {

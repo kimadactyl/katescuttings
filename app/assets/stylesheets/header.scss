@@ -27,7 +27,7 @@ header {
     padding: 2rem 1rem 1.5rem;
     box-sizing: border-box;
     margin: 0;
-    @include for-tablet-landscape-up {
+    @include for-tablet-portrait-up {
       background-image: image-url('icons/logo-text.png'), image-url('icons/logo-tools.png');
       background-size: 341px 81px, 100px 100px;
       background-position: center left, center right;

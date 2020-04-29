@@ -41,12 +41,17 @@ $georgia: Georgia, Times, "Times New Roman", serif;
 
 /* Gutters */
 $page-gutter: 1rem;
+$page-gutter-portrait: 2rem;
 $page-gutter-landscape: 3rem;
 $page-gutter-desktop: 4rem;
 
 @mixin gutters {
   margin-left: $page-gutter;
   margin-right: $page-gutter;
+  @include for-tablet-portrait-up {
+    margin-left: $page-gutter-portrait;
+    margin-right: $page-gutter-portrait;
+  }
   @include for-tablet-landscape-up {
     margin-left: $page-gutter-landscape;
     margin-right: $page-gutter-landscape;
@@ -54,5 +59,22 @@ $page-gutter-desktop: 4rem;
   @include for-desktop-up {
     margin-left: $page-gutter-desktop;
     margin-right: $page-gutter-desktop;
+  }
+}
+
+@mixin gutters-padding {
+  padding-left: $page-gutter;
+  padding-right: $page-gutter;
+  @include for-tablet-portrait-up {
+    padding-left: $page-gutter-portrait;
+    padding-right: $page-gutter-portrait;
+  }
+  @include for-tablet-landscape-up {
+    padding-left: $page-gutter-landscape;
+    padding-right: $page-gutter-landscape;
+  }
+  @include for-desktop-up {
+    padding-left: $page-gutter-desktop;
+    padding-right: $page-gutter-desktop;
   }
 }

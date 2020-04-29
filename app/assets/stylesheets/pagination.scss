@@ -1,6 +1,8 @@
 @import "variables";
 
 .pagination {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
   span {
     display: inline-block;
     border: 1px solid $medium-grey;
