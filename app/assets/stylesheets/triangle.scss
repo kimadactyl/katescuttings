@@ -1,0 +1,32 @@
+@import "variables";
+
+$triangle-width: 1.5rem;
+
+.triangles {
+  display: none;
+  @include for-desktop-up {
+    display: block;
+    margin: 0 -1.5rem;
+    position: relative;
+  }
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  -webkit-transform:rotate(360deg);
+  border-style: inset;
+  display: block;
+  position: absolute;
+  &--l {
+    border-width: 0 $triangle-width $triangle-width 0;
+    border-color: transparent $primary transparent transparent;
+    left: 0;
+  }
+  &--r {
+    border-width: $triangle-width $triangle-width 0 0;
+    border-color: $primary transparent transparent transparent;
+    right: 0;
+  }
+}

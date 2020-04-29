@@ -1,14 +1,58 @@
-/* Colour Variables */
+/* Colours */
 $primary: #5E0E56;
 $dark-grey: #463D31;
 $medium-grey: #534741;
 $light-grey: #C2C2C2;
 $lighter-grey: #f1f1f1;
 
-$background-outer: #F9F5F1;
-$background-inner: $lighter-grey;
-$white: $lighter-grey;
+$background-outer: $lighter-grey;
+$background-inner: white;
+$white: white;
 
 /* Font stacks */
 $garamond: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
 $georgia: Georgia, Times, "Times New Roman", serif;
+
+/* Breakpoints */
+@mixin for-phone-only {
+  @media (max-width: 599px) { @content; }
+}
+@mixin for-tablet-only {
+  @media (min-width: 600px) and (max-width: 1200px) { @content; }
+}
+@mixin for-tablet-portrait-up {
+  @media (min-width: 600px) { @content; }
+}
+@mixin for-tablet-landscape-up {
+  @media (min-width: 900px) { @content; }
+}
+@mixin for-desktop-up {
+  @media (min-width: 1200px) { @content; }
+}
+@mixin for-big-desktop-up {
+  @media (min-width: 1800px) { @content; }
+}
+@mixin for-print {
+  @media print { @content; }
+}
+@mixin for-retina {
+  @media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) { @content; }
+}
+
+/* Gutters */
+$page-gutter: 1rem;
+$page-gutter-landscape: 3rem;
+$page-gutter-desktop: 4rem;
+
+@mixin gutters {
+  margin-left: $page-gutter;
+  margin-right: $page-gutter;
+  @include for-tablet-landscape-up {
+    margin-left: $page-gutter-landscape;
+    margin-right: $page-gutter-landscape;
+  }
+  @include for-desktop-up {
+    margin-left: $page-gutter-desktop;
+    margin-right: $page-gutter-desktop;
+  }
+}

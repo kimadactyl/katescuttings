@@ -1,4 +1,4 @@
-<div class="teasers">
+<div class="layout__main teasers">
   <% @grouped_blogs.each do |month| %>
     <h3 class="teaser__month"><%= month[0] %></h3>
     <% month[1].each do |blog| %>
@@ -21,7 +21,7 @@
   <%= paginate @blogs %>
 </div>
 
-<aside class="almanac">
+<aside class="layout__aside almanac">
   <% @almanac.each do |year| %>
     <h3><%= year.first %></h3>
     <div class="almanac__year">

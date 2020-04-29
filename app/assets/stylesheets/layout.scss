@@ -8,8 +8,28 @@ body {
   background: $background-inner;
   margin: 0;
   padding: 0;
+  @include for-tablet-landscape-up {
+    margin: 0 3rem;
+    border-width: 0 2px;
+    border-style: solid;
+    border-color: $light-grey;
+  }
+  @include for-desktop-up {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 }
 
 main {
-  margin: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  @include gutters;
+}
+
+.layout {
+  @include for-tablet-landscape-up {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-gap: 3rem;
+  }
 }
