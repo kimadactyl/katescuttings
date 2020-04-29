@@ -9,6 +9,11 @@
           <%= blog.body.truncate(600, separator: "\n", omission: '') %>
           <%= link_to "Read more…", blog_url(blog), class: "teaser__more" %>
         </div>
+        <div class="teaser__images">
+          <% blog.images.each do |image| %>
+            <%= image_tag image.variant(resize_to_fill: [200, 200]) %>
+          <% end %>
+        </div>
       </article>
     <% end %>
   <% end %>
