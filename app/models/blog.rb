@@ -7,7 +7,7 @@ class Blog < ApplicationRecord
   def self.in_month(year, month)
     start_date = DateTime.new(year.to_i, month.to_i)
     end_date = start_date + 1.month
-    Blog.where('created_at >= ? AND created_at <= ?', start_date, end_date)
+    Blog.where('created_at >= ? AND created_at < ?', start_date, end_date)
   end
 
   def self.almanac

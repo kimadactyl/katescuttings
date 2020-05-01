@@ -94,9 +94,11 @@ To have a look at the file structure if you get lost: `dokku enter katescuttings
 
 You'll also want to increase the maximum file size to something a bit more sensible.
 
-Write a file: `/home/dokku/katescuttings/nginx.conf.d/upload_limit.conf`
-
-Add a line like: `client_max_body_size 50m;`
+```
+mkdir /home/dokku/katescuttings/nginx.conf.d/
+touch /home/dokku/katescuttings/nginx.conf.d/upload_limit.conf
+echo "client_max_body_size 50m;" >> /home/dokku/katescuttings/nginx.conf.d/upload_limit.conf
+```
 
 ## Local config
 
@@ -221,7 +223,7 @@ Commit, push to repo, and merge into the branch when ready.
 
 ## Set production environment variables
 
-You can fenerate a key with `rails secret`
+You can generate a key with `rails secret`
 
 `dokku config:set katescuttings RAILS_ENV=production SECRET_KEY_BASE=RAILS_SECRET RAILS_SERVE_STATIC_FILES=true`
 
