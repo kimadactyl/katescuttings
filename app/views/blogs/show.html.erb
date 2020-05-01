@@ -3,11 +3,9 @@
 
   <h1><%= @blog.title %></h1>
 
-  <% @blog.images.each.with_index(1) do |image, idx| %>
-    <%= link_to url_for(image), class: 'lightbox' do %>
-      <%= image_tag image.variant(resize_to_fill: [200, 200]) %>
-    <% end %>
-  <% end %>
+  <div class="gallery blog__gallery">
+    <%= render partial: 'gallery', locals: { images: @blog.images } %>
+  </div>
 
   <%= markdown @blog.body %>
 </article>

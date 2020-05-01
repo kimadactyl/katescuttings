@@ -28,7 +28,7 @@ header {
     box-sizing: border-box;
     margin: 0;
     @include for-tablet-portrait-up {
-      background-image: image-url('icons/logo-text.png'), image-url('icons/logo-tools.png');
+      background-image: image-url('icons/logo-text.svg'), image-url('icons/logo-tools.svg');
       background-size: 341px 81px, 100px 100px;
       background-position: center left, center right;
       width: 100%;

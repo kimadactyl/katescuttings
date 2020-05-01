@@ -1,0 +1,5 @@
+<% images.each.with_index(1) do |image, idx| %>
+  <%= link_to url_for(image.variant(resize_to_limit: [1024, 1024])), class: 'lightbox' do %>
+    <%= image_tag image.variant(resize_to_fill: [200, 200]) %>
+  <% end %>
+<% end %>
