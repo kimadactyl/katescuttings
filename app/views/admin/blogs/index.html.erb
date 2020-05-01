@@ -4,7 +4,7 @@
   <table>
     <% @blogs.each do |blog| %>
       <tr>
-        <td><%= blog.title %></td>
+        <td><%= link_to blog.title, edit_admin_blog_path(blog) %></td>
         <td><%= blog.created_at %></td>
       </tr>
     <% end %>

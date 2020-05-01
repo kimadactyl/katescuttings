@@ -1,0 +1,16 @@
+<article>
+  <h1>Edit post</h1>
+
+  <%= form_for @blog do |f| %>
+    <%= f.text_field :title %><br>
+    <%= f.rich_text_area :body %><br>
+    <%= f.file_field :images, multiple: true, direct_upload: true %>
+  <% end %>
+</article>
+
+<aside>
+  <h2>Current images</h2>
+  <div class="gallery upload__gallery">
+    <%= render partial: 'blogs/gallery', locals: { images: @blog.images } %>
+  </div>
+</aside>
