@@ -1,0 +1,15 @@
+table {
+  line-height: 1.5;
+  width: 100%
+}
+thead {
+  font-weight: bold;
+}
+tbody {
+  tr:nth-child(odd) {
+    background-color: rgba(0, 0, 0, .1)
+  }
+}
+td {
+  padding: 0.5rem 2rem 0.5rem 0.5rem;
+}

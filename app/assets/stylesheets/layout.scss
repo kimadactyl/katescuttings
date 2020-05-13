@@ -26,7 +26,7 @@ main {
   @include gutters;
 }
 
-.layout {
+.layout--columns {
   @include for-tablet-landscape-up {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -36,6 +36,7 @@ main {
     grid-gap: $page-gutter-desktop;
   }
 }
+
 
 aside.page {
   margin-top: 7rem;

@@ -1,12 +1,35 @@
-<article>
-  <h1>Blog Admin Index</h1>
+<% provide :template, 'admin' %>
 
-  <table>
-    <% @blogs.each do |blog| %>
+<article>
+  <h1>Blog Admin</h1>
+
+  <p><strong><%= link_to "New blog", new_admin_blog_path %></strong></p>
+
+  <table cellspacing="0">
+    <thead>
       <tr>
-        <td><%= link_to blog.title, edit_admin_blog_path(blog) %></td>
-        <td><%= blog.created_at %></td>
+        <td>Title</td>
+        <td>Images</td>
+        <td>Created time</td>
+        <td>Actions</td>
       </tr>
-    <% end %>
+      </thead>
+    <tbody>
+      <% @blogs.each do |blog| %>
+        <tr>
+          <td><%= link_to blog.title, edit_admin_blog_path(blog) %></td>
+          <td><%= pluralize(blog.images.count, 'image') %></td>
+          <td><%= blog.created_at.strftime("%d %b %Y, %H:%M") %></td>
+          <td>
+            <%= link_to 'See post', blog_path(blog) %>
+            <%= link_to 'Edit', edit_admin_blog_path(blog) %>
+            <%= link_to 'Delete', admin_blog_path(blog),
+                                  method: :delete,
+                                  data: { confirm: 'Are you sure?' } %>
+          </tr>
+      <% end %>
+    </tbody>
   </table>
 </article>
+
+<%= paginate @blogs %>
