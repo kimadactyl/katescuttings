@@ -1,6 +1,7 @@
 class Blog < ApplicationRecord
   validates :title, presence: true
   has_many_attached :images
+  has_rich_text :body
 
   scope :teasers, -> { order(created_at: :desc) }
 

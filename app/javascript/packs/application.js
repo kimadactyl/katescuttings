@@ -14,6 +14,7 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+
 const { Luminous, LuminousGallery } = require("luminous-lightbox");
 
 const initGalleries = () => {
@@ -32,3 +33,6 @@ const initLightbox = (lightbox) => {
 }
 
 document.addEventListener("turbolinks:load", initGalleries);
+
+require("trix")
+require("@rails/actiontext")

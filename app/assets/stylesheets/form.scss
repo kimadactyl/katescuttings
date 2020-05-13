@@ -1,0 +1,19 @@
+@import "variables";
+
+.form__title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  width: 99%;
+}
+
+.form__submit {
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+  display: block;
+  -webkit-appearance: none;
+  border-radius: 0.5rem;
+  background-color: $primary;
+  color: $white;
+  font-weight: bold;
+  margin: 1rem 0 3rem;
+}

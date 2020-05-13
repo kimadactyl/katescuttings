@@ -1,0 +1,4 @@
+<%= f.text_field :title, class: 'form__title' %><br>
+<%= f.rich_text_area :body %><br>
+<%= f.file_field :images, multiple: true, direct_upload: true %>
+<%= f.submit 'Submit', class: 'form__submit' %>

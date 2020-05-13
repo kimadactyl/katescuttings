@@ -9,7 +9,7 @@
     <%= render partial: 'gallery', locals: { images: @blog.images } %>
   </div>
 
-  <%= markdown @blog.body %>
+  <%= @blog.body %>
 </article>
 
 <%= render 'almanac' %>

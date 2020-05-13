@@ -3,11 +3,8 @@
 <article>
   <h1>Edit post</h1>
 
-  <%= form_with model: [:admin, @blog] do |f| %>
-    <%= f.text_field :title %><br>
-    <%= f.text_area :body %><br>
-    <%= f.file_field :images, multiple: true, direct_upload: true %>
-    <%= f.submit %>
+  <%= form_with model: @blog, url: admin_blog_path(@blog) do |f| %>
+    <%= render partial: 'fields', locals: { f: f } %>
   <% end %>
 
   <p><em><%= link_to 'Back to index', admin_blogs_path %></em></p>
