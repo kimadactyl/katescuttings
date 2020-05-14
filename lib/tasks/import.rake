@@ -24,7 +24,12 @@ namespace :import do
       b = Blog.find_by(imported_id: image['entity_id'])
       File.open(Rails.root.join('db', 'import', 'files', filename)) do |file|
         ActiveRecord::Base.transaction do
-          b.images.attach(io: file, filename: filename, content_type: "image/jpeg")
+          a = b.attachments.build(
+            title: b.title,
+            taken_at: b.created_at
+          )
+          a.image.attach(io: file, filename: filename, content_type: "image/jpeg")
+          a.save
           puts "Uploaded #{filename} to #{image['entity_id']}..."
         end
       end

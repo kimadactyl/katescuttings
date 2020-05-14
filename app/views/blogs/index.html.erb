@@ -12,7 +12,7 @@
           <%= link_to "Read more…", blog_url(blog), class: "teaser__more" %>
         </div>
         <div class="gallery teaser__gallery">
-          <%= render partial: 'gallery', locals: { images: blog.images } %>
+          <%= render partial: 'gallery', locals: { attachments: blog.attachments } %>
         </div>
       </article>
     <% end %>

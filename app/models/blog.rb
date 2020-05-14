@@ -1,7 +1,10 @@
 class Blog < ApplicationRecord
   validates :title, presence: true
-  has_many_attached :images
   has_rich_text :body
+  has_many :attachments
+  accepts_nested_attributes_for :attachments,
+    allow_destroy: true,
+    reject_if: :all_blank
 
   scope :teasers, -> { order(created_at: :desc) }
 

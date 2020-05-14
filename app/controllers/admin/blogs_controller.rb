@@ -8,6 +8,7 @@ class Admin::BlogsController < ApplicationController
 
   def new
     @blog = Blog.new
+    3.times { @blog.attachments.build }
   end
 
   def create
@@ -15,18 +16,20 @@ class Admin::BlogsController < ApplicationController
 
     if @blog.save
       flash[:success] = "Successfully created new blog"
-      redirect_to admin_blogs_path
+      redirect_to edit_admin_blog_path(@blog)
     else
       render 'new'
     end
   end
 
   def edit
+    1.times { @blog.attachments.build }
   end
 
   def update
+    puts blog_params
     @blog.update(blog_params)
-    redirect_to admin_blogs_path
+    redirect_to edit_admin_blog_path(@blog)
   end
 
   def destroy
@@ -37,7 +40,11 @@ class Admin::BlogsController < ApplicationController
   private
 
   def blog_params
-    params.require(:blog).permit(:title, :body, :images)
+    params.require(:blog).permit(
+      :title,
+      :body,
+      attachments_attributes: [:id, :title, :image, :_destroy]
+    )
   end
 
   def set_blog

@@ -3,9 +3,7 @@
 <article>
   <h1>Edit post</h1>
 
-  <%= form_with model: @blog, url: admin_blog_path(@blog) do |f| %>
-    <%= render partial: 'fields', locals: { f: f } %>
-  <% end %>
+  <%= render partial: 'fields' %>
 
   <p><em><%= link_to 'Back to index', admin_blogs_path %></em></p>
 </article>
@@ -13,6 +11,6 @@
 <aside>
   <h2>Current images</h2>
   <div class="gallery upload__gallery">
-    <%= render partial: 'blogs/gallery', locals: { images: @blog.images } %>
+    <%= render partial: 'blogs/gallery', locals: { attachments: @blog.attachments } %>
   </div>
 </aside>

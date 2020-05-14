@@ -1,4 +1,18 @@
-<%= f.text_field :title, class: 'form__title' %><br>
-<%= f.rich_text_area :body %><br>
-<%= f.file_field :images, multiple: true, direct_upload: true %>
-<%= f.submit 'Submit', class: 'form__submit' %>
+<%= form_with model: [:admin, @blog] do |f| %>
+  <%= f.label :title %><br>
+  <%= f.text_field :title, class: 'form__title' %><br>
+  <%= f.rich_text_area :body %><br>
+
+  <h3>Image attachments</h3>
+  <%= f.fields_for :attachments do |a| %>
+    <div class='form__image'>
+      <%= a.label :title %><br>
+      <%= a.text_field :title %><br>
+      <%= a.file_field :image, direct_upload: true %><br>
+      <%= a.label "Delete" %>
+      <%= a.check_box :_destroy %>
+    </div>
+  <% end %>
+
+  <%= f.submit 'Submit', class: 'form__submit' %>
+<% end %>
