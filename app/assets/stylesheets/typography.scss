@@ -30,3 +30,18 @@ a {
     text-decoration: none;
   }
 }
+
+blockquote {
+  font-style: italic;
+  margin-left: 1.5rem;
+  &:before {
+    content: "“"
+  }
+  &:after {
+    content: "”"
+  }
+}
+
+img, iframe {
+  max-width: 100%
+}
