@@ -1,5 +1,10 @@
-<% provide :title, @blog.title %>
 <% provide :template, 'columns' %>
+<% provide :title, @blog.title %>
+<% provide :description, truncate(strip_tags(@blog.body.to_s), length: 150) %>
+<% if @blog.attachments.any? %>
+  <% variant = @blog.attachments.first.image.variant(resize_to_limit: [1024, 1024])
+     provide :image, main_app.url_for(variant.processed) %>
+<% end %>
 
 <article class="blog">
   <div class="date"><span><%= @blog.formatted_date %></span></div>
