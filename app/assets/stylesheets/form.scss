@@ -6,6 +6,10 @@ form {
     width: 80%;
   }
 
+  input[type=date] {
+    font-size: 1.25rem;
+  }
+
   input[type=file] {
     margin: 0.5rem 0;
   }

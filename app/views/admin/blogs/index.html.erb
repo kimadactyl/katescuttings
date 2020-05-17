@@ -10,7 +10,8 @@
       <tr>
         <td>Title</td>
         <td>Images</td>
-        <td>Created time</td>
+        <td>Created at</td>
+        <td>Published at</td>
         <td>Actions</td>
       </tr>
       </thead>
@@ -19,7 +20,8 @@
         <tr>
           <td><%= link_to blog.title, edit_admin_blog_path(blog) %></td>
           <td><%= pluralize(blog.attachments.count, 'image') %></td>
-          <td><%= blog.created_at.strftime("%d %b %Y, %H:%M") %></td>
+          <td><%= blog.created_at.strftime("%d %b %Y") %></td>
+          <td><%= blog.published_at.strftime("%d %b %Y") %></td>
           <td>
             <%= link_to 'See post', blog_path(blog) %>
             <%= link_to 'Edit', edit_admin_blog_path(blog) %>

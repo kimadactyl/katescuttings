@@ -8,6 +8,7 @@ class Admin::BlogsController < ApplicationController
 
   def new
     @blog = Blog.new
+    @blog.published_at = Time.now
     3.times { @blog.attachments.build }
   end
 
@@ -43,6 +44,7 @@ class Admin::BlogsController < ApplicationController
     params.require(:blog).permit(
       :title,
       :body,
+      :published_at,
       attachments_attributes: [:id, :title, :image, :_destroy]
     )
   end

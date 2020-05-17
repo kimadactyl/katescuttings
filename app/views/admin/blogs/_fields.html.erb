@@ -14,5 +14,12 @@
     </div>
   <% end %>
 
+  <br>
+  
+  <%= f.label :published_at, 'Publication date' %><br>
+  <%= f.date_field :published_at %><br>
+
+  <br>
+
   <%= f.submit 'Submit', class: 'form__submit' %>
 <% end %>

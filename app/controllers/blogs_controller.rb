@@ -18,7 +18,7 @@ class BlogsController < ApplicationController
   end
 
   def group_teasers_by_month(blogs)
-    blogs.group_by { |b| b.created_at.strftime '%B %Y' }
+    blogs.group_by { |b| b.published_at.strftime '%B %Y' }
   end
 
 end
