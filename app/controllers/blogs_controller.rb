@@ -3,7 +3,7 @@ class BlogsController < ApplicationController
     if params["year"] && params["month"]
       @display = 'month'
       @blogs = Blog.in_month(params[:year], params[:month])
-      redirect_to blog_path(@blogs.first.id) if @blogs.count == 1
+      redirect_to blog_path(@blogs.first.friendly_id) if @blogs.count == 1
     else
       @display = 'all'
       @blogs = Blog.teasers.page(params[:page]).per(10)
@@ -13,12 +13,11 @@ class BlogsController < ApplicationController
   end
 
   def show
-    @blog = Blog.find(params[:id])
+    @blog = Blog.friendly.find(params[:id])
     @almanac = Blog.almanac
   end
 
   def group_teasers_by_month(blogs)
     blogs.group_by { |b| b.published_at.strftime '%B %Y' }
   end
-
 end

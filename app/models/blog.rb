@@ -1,7 +1,11 @@
 class Blog < ApplicationRecord
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
   validates :title, :published_at, presence: true
   has_rich_text :body
   has_many :attachments
+
   accepts_nested_attributes_for :attachments,
     allow_destroy: true,
     reject_if: :all_blank

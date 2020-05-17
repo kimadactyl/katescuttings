@@ -29,12 +29,12 @@ gem 'mini_magick'
 gem 'redcarpet'
 # Pagination
 gem 'kaminari'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
-
 # Less mad logs
 gem 'lograge'
+# Nicer URLS
+gem 'friendly_id'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
