@@ -16,6 +16,13 @@
   </div>
 
   <%= @blog.body %>
+
+  <% if @blog.prev || @blog.next %>
+    <div class="blog__links">
+      <%= link_to "← Previous article", @blog.prev if @blog.prev %>
+      <%= link_to "Next article →", @blog.next if @blog.next %>
+    </div>
+  <% end %>
 </article>
 
 <%= render 'almanac' %>

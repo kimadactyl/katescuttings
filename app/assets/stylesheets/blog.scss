@@ -4,4 +4,13 @@
   h1 {
     margin: 1rem 0;
   }
+  &__links {
+    margin-top: 3rem;
+    a {
+      display: inline-block
+    }
+    a:nth-child(2) {
+      float: right
+    }
+  }
 }

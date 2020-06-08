@@ -20,6 +20,11 @@
     color: $white;
     font-size: 1.2857rem;
     font-style: italic;
+    @include for-phone-only {
+      span {
+        display: none;
+      }
+    }
   }
   @include for-tablet-portrait-up {
     margin: 0 -2px;

@@ -7,10 +7,24 @@ class Blog < ApplicationRecord
   has_many :attachments
 
   accepts_nested_attributes_for :attachments,
-    allow_destroy: true,
-    reject_if: :all_blank
+                                allow_destroy: true,
+                                reject_if: :all_blank
 
   scope :teasers, -> { order(published_at: :desc) }
+
+  def prev
+    b = Blog.order(published_at: :desc)
+            .where('published_at < ?', published_at)
+            .limit(1)
+    b.length == 1 ? b[0] : false
+  end
+
+  def next
+    b = Blog.order(published_at: :asc)
+            .where('published_at > ?', published_at)
+            .limit(1)
+    b.length == 1 ? b[0] : false
+  end
 
   def self.in_month(year, month)
     start_date = DateTime.new(year.to_i, month.to_i)

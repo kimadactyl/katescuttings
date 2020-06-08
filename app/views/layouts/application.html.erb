@@ -17,9 +17,9 @@
       <nav role="main" class="navigation">
         <ul>
           <li><%= link_to "Articles", root_url %></li>
-          <li><%= link_to "About Kate", kate_url %></li>
-          <li><%= link_to "The Garden", garden_url %></li>
-          <li><%= link_to "The Book", book_url %></li>
+          <li><%= link_to "<span>About </span>Kate".html_safe, kate_url %></li>
+          <li><%= link_to "<span>The </span>Garden".html_safe, garden_url %></li>
+          <li><%= link_to "<span>The </span>Book".html_safe, book_url %></li>
         </ul>
       </nav>
       <div class="triangles">
