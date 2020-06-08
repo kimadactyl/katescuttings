@@ -3,7 +3,7 @@
 For your ctrl-D pleasure...
 
 ```
-104.248.170.14
+SERVER_IP
 katescuttings
 RAILS_SECRET (generate with `rails secret`)
 kim@gfsc.studio
@@ -16,7 +16,7 @@ Create an Ubuntu 16.04 droplet using the Digital Ocean dashboard.
 ### Sign in and update
 
 ```
-ssh root@104.248.170.14
+ssh root@SERVER_IP
 apt update && apt upgrade --assume-yes
 ```
 
@@ -54,7 +54,7 @@ sudo DOKKU_TAG=v0.20.4 bash bootstrap.sh
 
 ### Add a domain name (mandatory)
 
-Go to http://104.248.170.14 and add a domain name (if you don't it seems to go weird: use a junk one if needed)
+Go to http://SERVER_IP and add a domain name (if you don't it seems to go weird: use a junk one if needed)
 
 ### Create the app and database
 
@@ -125,7 +125,7 @@ echo "client_max_body_size 50m;" >> /home/dokku/katescuttings/nginx.conf.d/uploa
 If you don't want CI you can skip to "Set production environment variables" and just do this.
 
 ```
-git remote add dokku dokku@104.248.170.14:katescuttings
+git remote add dokku dokku@SERVER_IP:katescuttings
 git push dokku master
 ```
 
