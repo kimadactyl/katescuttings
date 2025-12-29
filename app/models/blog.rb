@@ -6,6 +6,16 @@ class Blog < ApplicationRecord
   has_rich_text :body
   has_many :attachments
 
+  after_commit :expire_almanac_cache
+
+  private
+
+  def expire_almanac_cache
+    Rails.cache.delete("blog_almanac")
+  end
+
+  public
+
   accepts_nested_attributes_for :attachments,
                                 allow_destroy: true,
                                 reject_if: :all_blank
