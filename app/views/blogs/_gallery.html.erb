@@ -1,6 +1,6 @@
 <% attachments.each do |a| %>
   <% next if a.id.nil? %>
-  <%= link_to url_for(a.image.variant(resize_to_limit: [1024, 1024])), class: 'lightbox', data: { lightbox_target: 'item', caption: a.title.presence || a.alt_text } do %>
+  <%= link_to url_for(a.image.variant(resize_to_limit: [2048, 2048])), class: 'lightbox', data: { lightbox_target: 'item', caption: a.title.presence || a.alt_text } do %>
     <%= image_tag a.image.variant(resize_to_fill: [200, 200]),
           srcset: "#{url_for(a.image.variant(resize_to_fill: [200, 200]))} 1x, #{url_for(a.image.variant(resize_to_fill: [400, 400]))} 2x",
           alt: a.alt_text %>
