@@ -42,9 +42,32 @@ bundle exec database_consistency  # Check DB constraints
 
 In development, admin access auto-logs in as the first user (no OAuth needed).
 
+## Content Management
+
+### Rake Tasks
+
+```bash
+bin/rails content:normalize          # Convert legacy div-based posts to proper <p> tags
+bin/rails content:normalize_preview  # Preview what normalize would change (dry run)
+```
+
+The normalize task fixes paragraph spacing in older posts that used `<div>` tags with `<div>&nbsp;</div>` spacers instead of proper `<p>` tags.
+
+## Image Handling
+
+- **Thumbnails**: 250×250px (500×500px for retina) in 3-column CSS grid
+- **Lightbox**: Up to 2048×2048px for full-screen viewing
+- **Alt text**: Stored in `attachments.alt_text` field, synced from caption by default
+- **Captions**: Stored in `attachments.title`, displayed in lightbox
+
+## Stimulus Controllers
+
+- `lightbox_controller.js` - Luminous lightbox integration with alt text support
+- `attachments_controller.js` - Admin image uploader with preview, caption sync, and soft delete
+
 ## Deployment
 
-Pushes to `master` branch auto-deploy via GitHub Actions.
+Pushes to `main` branch auto-deploy via GitHub Actions.
 
 ```bash
 kamal deploy      # Manual deploy
