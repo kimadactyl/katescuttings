@@ -9,21 +9,22 @@ trix-toolbar [data-trix-button-group="file-tools"],
   display: none !important;
 }
 
-// Fix paragraph spacing for content using <div> instead of <p>
-// (common in older imported posts or when content is pasted)
+// Consistent paragraph spacing for all content
+// Some posts use <p>, some use <div> - normalize them all
 .trix-content {
-  > div {
-    margin-bottom: 1em;
-    &:last-child {
-      margin-bottom: 0;
-    }
+  // Reset default p margins and set consistent spacing
+  p {
+    margin: 0 0 1em 0;
   }
 
-  p {
-    margin-bottom: 1em;
-    &:last-child {
-      margin-bottom: 0;
-    }
+  // Direct child divs act as paragraphs in some imported content
+  > div {
+    margin: 0 0 1em 0;
+  }
+
+  // Remove bottom margin from last element
+  > *:last-child {
+    margin-bottom: 0;
   }
   .attachment-gallery {
     > action-text-attachment,
