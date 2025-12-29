@@ -7,16 +7,16 @@
   padding: 0 1rem;
 }
 
-// Admin button - matches form submit button style
+// Admin button
 .admin-button {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1rem;
   background-color: $primary;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   color: $white;
   text-decoration: none;
-  font-size: 1.25rem;
+  font-size: 0.95rem;
   font-weight: 600;
 
   &:hover {
