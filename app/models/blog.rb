@@ -44,8 +44,8 @@ class Blog < ApplicationRecord
   end
 
   def self.almanac
-    # Get all blogs in reverse date order
-    blogs = Blog.order(published_at: :desc).limit(50)
+    # Get all blogs in reverse date order (no limit - show all years)
+    blogs = Blog.order(published_at: :desc).includes(:attachments)
     # Group them into months [["Year", "Month], Blog]]
     months = blogs.group_by { |b| [b.published_at.strftime('%Y'), b.published_at.strftime('%m')] }
     # Group them into years [["Year"], [["Year", "Month], Blog], ["Year", "Month], Blog]]]

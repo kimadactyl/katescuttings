@@ -43,8 +43,8 @@
 
   <% if @blog.prev || @blog.next %>
     <div class="blog__links">
-      <%= link_to "← Previous article", @blog.prev if @blog.prev %>
-      <%= link_to "Next article →", @blog.next if @blog.next %>
+      <%= link_to "← Newer article", @blog.next, class: "blog__link-newer" if @blog.next %>
+      <%= link_to "Older article →", @blog.prev, class: "blog__link-older" if @blog.prev %>
     </div>
   <% end %>
 </article>

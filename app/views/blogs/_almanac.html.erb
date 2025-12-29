@@ -1,19 +1,36 @@
 <% cache @almanac do %>
+  <% cutoff_year = (Date.today.year - 5).to_s %>
   <aside class="layout__aside almanac">
     <% @almanac.each do |year| %>
-      <h3><%= year[0] %></h3>
-      <div class="almanac__year">
-        <% year[1].each do |month| %>
-          <div class="almanac__month">
-            <%= link_to blogs_path(year: year[0], month: month[0][1]) do %>
-              <h4><%= Date::MONTHNAMES[month[0][1].to_i] %></h4>
-              <% if month[1][0].attachments[0] %>
-                <%= image_tag month[1][0].attachments[0].image.variant(resize_to_fill: [300, 300]), alt: month[1][0].attachments[0].title %>
+      <% if year[0] >= cutoff_year %>
+        <%# Recent years: show with images %>
+        <h3><%= year[0] %></h3>
+        <div class="almanac__year">
+          <% year[1].each do |month| %>
+            <div class="almanac__month">
+              <%= link_to blogs_path(year: year[0], month: month[0][1]) do %>
+                <h4><%= Date::MONTHNAMES[month[0][1].to_i] %></h4>
+                <% if month[1][0].attachments[0] %>
+                  <%= image_tag month[1][0].attachments[0].image.variant(resize_to_fill: [300, 300]), alt: month[1][0].attachments[0].title %>
+                <% end %>
               <% end %>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <%# Older years: compact text-only format %>
+        <% if year[0] == @almanac.keys.select { |y| y < cutoff_year }.first %>
+          <h3 class="almanac__earlier">Earlier</h3>
         <% end %>
-      </div>
+        <div class="almanac__archive">
+          <h5><%= year[0] %>:</h5>
+          <span class="almanac__archive-months">
+            <% year[1].sort_by { |m| m[0][1].to_i }.each_with_index do |month, index| %>
+              <%= link_to Date::ABBR_MONTHNAMES[month[0][1].to_i], blogs_path(year: year[0], month: month[0][1]) %><% if index < year[1].length - 1 %>,<% end %>
+            <% end %>
+          </span>
+        </div>
+      <% end %>
     <% end %>
   </aside>
 <% end %>
