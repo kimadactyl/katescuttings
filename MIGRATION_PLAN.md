@@ -28,13 +28,13 @@
 - [x] **2.5** Removed old Webpacker/Node files
 - [x] **2.6** App runs locally at http://localhost:3000
 
-## Phase 3: Kamal Setup
+## Phase 3: Kamal Setup ✓ COMPLETE
 
-- [ ] **3.1** Install Kamal gem
-- [ ] **3.2** Create `config/deploy.yml` for Hetzner
-- [ ] **3.3** Set up Docker configuration (Dockerfile)
-- [ ] **3.4** Configure secrets management (KAMAL_REGISTRY_PASSWORD, etc.)
-- [ ] **3.5** Set up GitHub Actions for auto-deploy on push to `main`
+- [x] **3.1** Install Kamal gem
+- [x] **3.2** Create `config/deploy.yml` for Hetzner + ghcr.io
+- [x] **3.3** Create Dockerfile with multi-stage build
+- [x] **3.4** Configure `.kamal/secrets` for environment variables
+- [x] **3.5** Set up GitHub Actions for auto-deploy on push to `main`
 
 ## Phase 4: Hetzner Server Setup
 
@@ -103,7 +103,7 @@ These can be done immediately without infrastructure:
 |-------|--------|
 | 1. Git housekeeping | Complete |
 | 2. Rails modernization | Complete |
-| 3. Kamal setup | Pending |
+| 3. Kamal setup | Complete |
 | 4. Hetzner server | Pending |
 | 5. Data migration | Complete (local) |
 | 6. Google OAuth | Pending |
@@ -111,8 +111,9 @@ These can be done immediately without infrastructure:
 
 ## Next Steps
 
-1. Set up Kamal deployment config
-2. Provision Hetzner server
-3. Deploy and migrate data to Hetzner
-4. Implement Google OAuth
-5. Final DNS cutover
+1. Provision Hetzner server (CX21 or higher, Ubuntu 22.04)
+2. Create GitHub Personal Access Token for ghcr.io
+3. Set environment variables and deploy with `kamal setup`
+4. Migrate data from DO to Hetzner
+5. Implement Google OAuth
+6. Final DNS cutover
