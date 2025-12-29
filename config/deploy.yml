@@ -2,14 +2,13 @@
 service: katescuttings
 
 # Docker image on GitHub Container Registry
-image: ghcr.io/kimadactyl/katescuttings
+image: kimadactyl/katescuttings
 
-# Deploy to Hetzner server (update with actual IP after provisioning)
+# Deploy to Hetzner server
 servers:
   web:
-    - 95.217.189.128
-    labels:
-      traefik.http.routers.katescuttings.rule: Host(`katescuttings.net`) || Host(`www.katescuttings.net`)
+    hosts:
+      - 95.217.189.128
 
 # SSL via Let's Encrypt
 proxy:
