@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   # Health check for Kamal/load balancers
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # SEO
+  get 'sitemap.xml', to: 'sitemaps#show', as: :sitemap, defaults: { format: 'xml' }
+
   root 'blogs#index'
   resources :blogs, only: %i[show index]
 

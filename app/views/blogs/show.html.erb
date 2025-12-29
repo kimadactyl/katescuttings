@@ -1,9 +1,34 @@
 <% provide :template, 'columns' %>
 <% provide :title, @blog.title %>
 <% provide :description, truncate(strip_tags(@blog.body.to_s), length: 150) %>
+<% provide :og_type, 'article' %>
+<% provide :canonical, blog_url(@blog) %>
 <% if @blog.attachments.any? %>
   <% variant = @blog.attachments.first.image.variant(resize_to_limit: [1024, 1024])
      provide :image, main_app.url_for(variant.processed) %>
+<% end %>
+
+<%= content_for :structured_data do %>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "<%= j @blog.title %>",
+  "datePublished": "<%= @blog.published_at.iso8601 %>",
+  "dateModified": "<%= @blog.updated_at.iso8601 %>",
+  "author": {
+    "@type": "Person",
+    "name": "Kate Foale"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kate's Cuttings",
+    "url": "https://katescuttings.net"
+  },
+  "description": "<%= j truncate(strip_tags(@blog.body.to_s), length: 150) %>"<% if @blog.attachments.any? %>,
+  "image": "<%= main_app.url_for(@blog.attachments.first.image.variant(resize_to_limit: [1024, 1024]).processed) %>"<% end %>
+}
+</script>
 <% end %>
 
 <article class="blog">

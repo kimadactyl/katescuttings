@@ -1,20 +1,29 @@
+<%# Page title %>
+<% meta_title = content_for?(:title) ? "#{yield :title} | Kate's Cuttings" : "Kate's Cuttings - A Nottinghamshire Garden Blog" %>
+<title><%= meta_title %></title>
 
-  <meta property="og:site_name" content="Kate's Cuttings">
-  <meta property="og:locale" content="en_GB">
+<%# Description %>
+<% meta_description = content_for?(:description) ? yield(:description).strip : "Kate's Cuttings is a gardening blog about Charnwood, a cottage garden in Nottinghamshire, England. Tips, seasonal updates, and photos from the garden." %>
+<meta name="description" content="<%= meta_description %>">
 
-  <% meta_title = content_for?(:title) ? "#{yield :title} | Kate's Cuttings" : "Kate's Cuttings" %>
-  <title><%= meta_title %></title>
-  <meta property="og:title" content="<%= meta_title %>" />
-  <meta name="twitter:title" content="<%= meta_title %>">
+<%# Canonical URL %>
+<% canonical_url = content_for?(:canonical) ? yield(:canonical) : request.original_url.split('?').first %>
+<link rel="canonical" href="<%= canonical_url %>">
 
-  <% meta_description = content_for?(:description) ? yield(:description).strip : "A blog about Kate's garden Charnwood." %>
-  <meta property="og:description" content="<%= meta_description %>" />
-  <meta name="twitter:description" content="<%= meta_description %>" />
+<%# Open Graph %>
+<meta property="og:site_name" content="Kate's Cuttings">
+<meta property="og:locale" content="en_GB">
+<meta property="og:type" content="<%= content_for?(:og_type) ? yield(:og_type) : 'website' %>">
+<meta property="og:title" content="<%= meta_title %>">
+<meta property="og:description" content="<%= meta_description %>">
+<meta property="og:url" content="<%= canonical_url %>">
+<% meta_image = content_for?(:image) ? yield(:image) : asset_url('pages/garden-1.jpg') %>
+<meta property="og:image" content="<%= meta_image %>">
 
-  <% meta_image = content_for?(:image) ? yield(:image) : image_url('pages/garden-1.jpg') %>
-  <meta property="og:image" content="<%= meta_description %>" />
-  <meta name="twitter:image" content="<%= meta_image %>" />
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@KatesCuttings">
-  <meta name="twitter:creator" content="@KatesCuttings">
+<%# Twitter Card %>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@KatesCuttings">
+<meta name="twitter:creator" content="@KatesCuttings">
+<meta name="twitter:title" content="<%= meta_title %>">
+<meta name="twitter:description" content="<%= meta_description %>">
+<meta name="twitter:image" content="<%= meta_image %>">
