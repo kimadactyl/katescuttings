@@ -1,0 +1,34 @@
+# Git
+.git
+.gitignore
+
+# Logs
+log/*
+
+# Temp files
+tmp/*
+
+# Editor configs
+.vscode
+.idea
+
+# Local env files
+.env*
+
+# Storage (handled by volumes)
+storage/*
+
+# Test/dev databases
+*.sqlite3
+
+# Node (shouldn't exist but just in case)
+node_modules
+
+# Kamal secrets
+.kamal/secrets
+
+# Claude/dev tools
+.claude-on-rails
+CLAUDE.md
+MIGRATION_PLAN.md
+claude-swarm.yml

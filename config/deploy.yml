@@ -1,0 +1,66 @@
+# Kamal deployment configuration for Kate's Cuttings
+service: katescuttings
+
+# Docker image on GitHub Container Registry
+image: ghcr.io/kimadactyl/katescuttings
+
+# Deploy to Hetzner server (update with actual IP after provisioning)
+servers:
+  web:
+    - 95.217.189.128
+    labels:
+      traefik.http.routers.katescuttings.rule: Host(`katescuttings.net`) || Host(`www.katescuttings.net`)
+
+# SSL via Let's Encrypt
+proxy:
+  ssl: true
+  host: katescuttings.net
+
+# GitHub Container Registry
+registry:
+  server: ghcr.io
+  username: kimadactyl
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+# Build for AMD64 (Hetzner servers)
+builder:
+  arch: amd64
+
+# Environment variables
+env:
+  clear:
+    RAILS_LOG_TO_STDOUT: "true"
+    RAILS_SERVE_STATIC_FILES: "true"
+  secret:
+    - RAILS_MASTER_KEY
+    - DATABASE_URL
+    - USERNAME
+    - PASSWORD
+
+# Persistent storage for Active Storage uploads
+volumes:
+  - "katescuttings_storage:/app/storage"
+
+# Asset bridging between deploys
+asset_path: /app/public/assets
+
+# PostgreSQL database
+accessories:
+  db:
+    image: postgres:16
+    host: 95.217.189.128
+    port: 5432
+    env:
+      clear:
+        POSTGRES_DB: katescuttings_production
+      secret:
+        - POSTGRES_PASSWORD
+    directories:
+      - data:/var/lib/postgresql/data
+
+# Useful aliases
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  logs: app logs -f
+  shell: app exec --interactive --reuse "bash"

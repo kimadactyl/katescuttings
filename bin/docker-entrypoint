@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+# Run pending migrations if any
+if [ "${SKIP_MIGRATIONS}" != "true" ]; then
+  bundle exec rails db:prepare
+fi
+
+exec "$@"
