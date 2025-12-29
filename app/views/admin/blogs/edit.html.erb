@@ -1,16 +1,5 @@
-<% provide :template, 'columns' %>
-
-<article>
+<article class="admin-form">
   <h1>Edit post</h1>
-
   <%= render partial: 'fields' %>
-
-  <p><em><%= link_to 'Back to index', admin_blogs_path %></em></p>
+  <p class="admin-form__back"><%= link_to '← Back to all posts', admin_blogs_path %></p>
 </article>
-
-<aside>
-  <h2>Current images</h2>
-  <div class="gallery upload__gallery">
-    <%= render partial: 'blogs/gallery', locals: { attachments: @blog.attachments } %>
-  </div>
-</aside>

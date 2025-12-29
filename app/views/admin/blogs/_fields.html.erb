@@ -1,27 +1,47 @@
 <%= form_with model: [:admin, @blog] do |f| %>
-  <%= f.label :title %><br>
-  <%= f.text_field :title, class: 'form__title' %><br>
-  <%= f.rich_text_area :body %><br>
+  <div class="form-section">
+    <%= f.label :title, class: 'form-label' %>
+    <%= f.text_field :title, class: 'form__title' %>
+  </div>
 
-  <h3>Image attachments</h3>
-  <%= f.fields_for :attachments do |a| %>
-    <div class='form__image'>
-      <%= a.label :title, "Caption" %><br>
-      <%= a.text_field :title, placeholder: "Caption shown in lightbox" %><br>
-      <%= a.label :alt_text, "Alt text" %><br>
-      <%= a.text_field :alt_text, placeholder: "Description for accessibility" %><br>
-      <%= a.file_field :image, direct_upload: true %><br>
-      <%= a.label "Delete" %>
-      <%= a.check_box :_destroy %>
+  <div class="form-section">
+    <%= f.label :body, class: 'form-label' %>
+    <%= f.rich_text_area :body %>
+  </div>
+
+  <div class="form-section" data-controller="attachments">
+    <h3 class="form-section__title">Images</h3>
+    <p class="form-section__help">Add images to display in the gallery. Caption appears in the lightbox, alt text is for accessibility.</p>
+
+    <div class="attachment-list" data-attachments-target="list">
+      <% @blog.attachments.each do |attachment| %>
+        <%= f.fields_for :attachments, attachment do |af| %>
+          <%= render 'attachment_fields', f: af, attachment: attachment %>
+        <% end %>
+      <% end %>
     </div>
-  <% end %>
 
-  <br>
-  
-  <%= f.label :published_at, 'Publication date' %><br>
-  <%= f.date_field :published_at %><br>
+    <button type="button" class="attachment-add" data-action="click->attachments#add">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+      Add image
+    </button>
 
-  <br>
+    <template data-attachments-target="template">
+      <%= f.fields_for :attachments, Attachment.new, child_index: 'NEW_RECORD' do |af| %>
+        <%= render 'attachment_fields', f: af, attachment: Attachment.new %>
+      <% end %>
+    </template>
+  </div>
 
-  <%= f.submit 'Submit', class: 'form__submit' %>
+  <div class="form-section">
+    <%= f.label :published_at, 'Publication date', class: 'form-label' %>
+    <%= f.date_field :published_at, class: 'form-date' %>
+  </div>
+
+  <div class="form-section">
+    <%= f.submit 'Save post', class: 'form__submit' %>
+  </div>
 <% end %>

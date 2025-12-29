@@ -9,7 +9,6 @@ class Admin::BlogsController < ApplicationController
   def new
     @blog = Blog.new
     @blog.published_at = Time.now
-    3.times { @blog.attachments.build }
   end
 
   def create
@@ -24,11 +23,9 @@ class Admin::BlogsController < ApplicationController
   end
 
   def edit
-    1.times { @blog.attachments.build }
   end
 
   def update
-    puts blog_params
     @blog.update(blog_params)
     redirect_to edit_admin_blog_path(@blog)
   end
