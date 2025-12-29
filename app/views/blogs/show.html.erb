@@ -1,6 +1,6 @@
 <% provide :template, 'columns' %>
 <% provide :title, @blog.title %>
-<% provide :description, truncate(strip_tags(@blog.body.to_s), length: 150) %>
+<% provide :description, truncate(CGI.unescapeHTML(strip_tags(@blog.body.to_s)), length: 150) %>
 <% provide :og_type, 'article' %>
 <% provide :canonical, blog_url(@blog) %>
 <% if @blog.attachments.any? %>
@@ -25,7 +25,7 @@
     "name": "Kate's Cuttings",
     "url": "https://katescuttings.net"
   },
-  "description": "<%= j truncate(strip_tags(@blog.body.to_s), length: 150) %>"<% if @blog.attachments.any? %>,
+  "description": "<%= j truncate(CGI.unescapeHTML(strip_tags(@blog.body.to_s)), length: 150) %>"<% if @blog.attachments.any? %>,
   "image": "<%= main_app.url_for(@blog.attachments.first.image.variant(resize_to_limit: [1024, 1024]).processed) %>"<% end %>
 }
 </script>

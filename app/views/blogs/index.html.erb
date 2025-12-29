@@ -10,7 +10,7 @@
         <div class="date"><span><%= blog.formatted_date %></span></div>
         <h2 class="teaser__title"><%= link_to blog.title, blog_url(blog) %></h2>
         <div class="teaser__body">
-          <%= truncate(strip_tags(blog.body.to_s), length: 600) %>
+          <%= truncate(CGI.unescapeHTML(strip_tags(blog.body.to_s)), length: 600) %>
           <%= link_to "Read more…", blog_url(blog), class: "teaser__more" %>
         </div>
         <div class="gallery teaser__gallery" data-controller="lightbox">
