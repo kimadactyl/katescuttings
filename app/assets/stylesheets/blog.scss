@@ -8,9 +8,16 @@
   }
   &__gallery {
     margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+
     a {
-      margin-right: 1rem;
-      display: inline-block;
+      display: block;
+    }
+
+    img {
+      display: block;
     }
   }
   &__links {
