@@ -13,7 +13,7 @@
           <%= truncate(strip_tags(blog.body.to_s), length: 600) %>
           <%= link_to "Read more…", blog_url(blog), class: "teaser__more" %>
         </div>
-        <div class="gallery teaser__gallery">
+        <div class="gallery teaser__gallery" data-controller="lightbox">
           <%= render partial: 'gallery', locals: { attachments: blog.attachments } %>
         </div>
       </article>

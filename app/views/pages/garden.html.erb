@@ -37,20 +37,20 @@
   </ul>
 </article>
 
-<aside class="page gallery garden">
-  <%= link_to image_url('pages/garden-1.jpg'), class: 'lightbox' do %>
+<aside class="page gallery garden" data-controller="lightbox">
+  <%= link_to image_url('pages/garden-1.jpg'), class: 'lightbox', data: { lightbox_target: 'item' } do %>
     <%= image_tag 'pages/garden-1_small.jpg', alt: 'Photo of the front garden' %>
   <% end %>
-  <%= link_to image_url('pages/garden-2.jpg'), class: 'lightbox' do %>
+  <%= link_to image_url('pages/garden-2.jpg'), class: 'lightbox', data: { lightbox_target: 'item' } do %>
     <%= image_tag 'pages/garden-2_small.jpg', alt: 'Photo of the pond and decking area' %>
   <% end %>
-  <%= link_to image_url('pages/garden-3.jpg'), class: 'lightbox' do %>
+  <%= link_to image_url('pages/garden-3.jpg'), class: 'lightbox', data: { lightbox_target: 'item' } do %>
     <%= image_tag 'pages/garden-3_small.jpg', alt: 'Photograph of a Wisteria growing on a pergola entwined with thistles' %>
   <% end %>
-  <%= link_to image_url('pages/garden-4.jpg'), class: 'lightbox' do %>
+  <%= link_to image_url('pages/garden-4.jpg'), class: 'lightbox', data: { lightbox_target: 'item' } do %>
     <%= image_tag 'pages/garden-4_small.jpg', alt: 'Photo of the back garden' %>
   <% end %>
-  <%= link_to image_url('pages/garden-5.jpg'), class: 'lightbox' do %>
+  <%= link_to image_url('pages/garden-5.jpg'), class: 'lightbox', data: { lightbox_target: 'item' } do %>
     <%= image_tag 'pages/garden-5_small.jpg', alt: 'Photo of the jungle hut' %>
   <% end %>
 </aside>
