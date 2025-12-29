@@ -1,5 +1,5 @@
 class Admin::BlogsController < ApplicationController
-  http_basic_authenticate_with name: ENV['USERNAME'], password: ENV['PASSWORD']
+  before_action :require_login
   before_action :set_blog, only: %i[edit update destroy]
 
   def index

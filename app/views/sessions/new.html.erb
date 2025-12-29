@@ -1,0 +1,17 @@
+<% content_for :template, "login" %>
+
+<article class="login">
+  <h2>Sign in to Admin</h2>
+
+  <% if flash[:error] %>
+    <div class="flash flash--error"><%= flash[:error] %></div>
+  <% end %>
+
+  <p>Sign in with your family Google account to manage the blog.</p>
+
+  <%= button_to "Sign in with Google", "/auth/google_oauth2", method: :post, class: "button button--google", data: { turbo: false } %>
+
+  <p class="login__note">
+    Only accounts from <strong>thefoales.net</strong> and <strong>gfsc.studio</strong> can sign in.
+  </p>
+</article>

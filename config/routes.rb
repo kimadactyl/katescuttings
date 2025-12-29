@@ -9,6 +9,12 @@ Rails.application.routes.draw do
   get 'garden', to: 'pages#garden'
   get 'book', to: 'pages#book'
 
+  # Authentication
+  get 'login', to: 'sessions#new', as: :login
+  delete 'logout', to: 'sessions#destroy', as: :logout
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: 'sessions#failure'
+
   namespace :admin do
     resources :blogs
     root 'blogs#index'
