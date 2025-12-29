@@ -1,6 +1,11 @@
 // Action Text / Trix editor styles
 // Trix base styles loaded from CDN in layout
 
+// Hide the attachment button in toolbar (we have our own image uploader)
+trix-toolbar .trix-button-group--file-tools {
+  display: none;
+}
+
 // Fix paragraph spacing for content using <div> instead of <p>
 // (common in older imported posts or when content is pasted)
 .trix-content {
