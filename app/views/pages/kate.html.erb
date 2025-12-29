@@ -31,8 +31,8 @@
   <p>You can follow Kate on Twitter <%= link_to "@KatesCuttings", "https://twitter.com/KatesCuttings" %></p>
 </article>
 
-<aside class="page gallery">
-  <%= link_to image_url('pages/kate.jpg'), class: 'lightbox' do %>
+<aside class="page gallery" data-controller="lightbox">
+  <%= link_to image_url('pages/kate.jpg'), class: 'lightbox', data: { lightbox_target: 'item' } do %>
     <%= image_tag 'pages/kate_small.jpg', alt: 'A photo of Kate holding two plants in her garden' %>
   <% end %>
 </aside>

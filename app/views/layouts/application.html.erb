@@ -4,8 +4,15 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= render "layouts/meta_tags" %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/trix@2.1.12/dist/trix.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luminous-lightbox@2.4.0/dist/luminous-basic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/luminous-lightbox@2.4.0/dist/luminous.min.js"></script>
+    <style>
+      /* Lightbox overrides */
+      .lum-lightbox { background: rgba(0, 0, 0, 0.9) !important; }
+    </style>
+    <%= javascript_importmap_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
