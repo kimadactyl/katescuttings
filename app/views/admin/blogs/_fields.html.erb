@@ -6,8 +6,10 @@
   <h3>Image attachments</h3>
   <%= f.fields_for :attachments do |a| %>
     <div class='form__image'>
-      <%= a.label :title %><br>
-      <%= a.text_field :title %><br>
+      <%= a.label :title, "Caption" %><br>
+      <%= a.text_field :title, placeholder: "Caption shown in lightbox" %><br>
+      <%= a.label :alt_text, "Alt text" %><br>
+      <%= a.text_field :alt_text, placeholder: "Description for accessibility" %><br>
       <%= a.file_field :image, direct_upload: true %><br>
       <%= a.label "Delete" %>
       <%= a.check_box :_destroy %>

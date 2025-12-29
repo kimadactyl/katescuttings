@@ -45,7 +45,7 @@ class Admin::BlogsController < ApplicationController
       :title,
       :body,
       :published_at,
-      attachments_attributes: [:id, :title, :image, :_destroy]
+      attachments_attributes: [:id, :title, :alt_text, :image, :_destroy]
     )
   end
 
