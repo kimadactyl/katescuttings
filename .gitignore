@@ -41,3 +41,4 @@ yarn-debug.log*
 .claude-on-rails/sessions/
 .claude-swarm/
 claude-swarm.log
+/backups/
