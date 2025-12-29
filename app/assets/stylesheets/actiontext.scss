@@ -47,3 +47,9 @@
 .lum-lightbox {
   background: rgba(0, 0, 0, 0.9) !important;
 }
+
+.lum-lightbox-caption {
+  // Ensure text descenders (g, y, p, q) aren't cropped
+  line-height: 1.4;
+  padding-bottom: 0.5em;
+}
