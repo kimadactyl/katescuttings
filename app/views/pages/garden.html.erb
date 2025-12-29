@@ -3,6 +3,25 @@
 <% provide :description, "An introduction and history of Charnwood's garden" %>
 <% provide :image, image_url('pages/garden-1.jpg') %>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Place",
+  "name": "Charnwood Garden",
+  "description": "A one-acre garden in South Nottinghamshire, developed since 1987 by Kate and Peter Foale. Former National Garden Scheme Yellow Book garden.",
+  "url": "<%= garden_url %>",
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "Nottinghamshire",
+    "addressCountry": "GB"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "addressCountry": "GB"
+  }
+}
+</script>
+
 <article>
   <h1>The Garden</h1>
 

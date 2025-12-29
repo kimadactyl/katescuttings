@@ -3,6 +3,26 @@
 <% provide :description, "Meet Kate, a mad keen amateur gardener all her life" %>
 <% provide :image, image_url('pages/kate_small.jpg') %>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About Kate",
+  "description": "Meet Kate Foale, a passionate amateur gardener who has been developing her garden at Charnwood in Nottinghamshire since 1987. Kate shares her love of plants, garden design, and the joy of creating an immersive garden experience.",
+  "url": "<%= kate_url %>",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Kate Foale",
+    "description": "Kate Foale is a lifelong gardener and author based in Nottinghamshire, UK. She tends Charnwood, a one-acre cottage garden that was featured in the National Garden Scheme Yellow Book from 2009 to 2013.",
+    "jobTitle": "Gardener and Author",
+    "sameAs": [
+      "https://twitter.com/KatesCuttings"
+    ],
+    "knowsAbout": ["Gardening", "Horticulture", "Garden Design"]
+  }
+}
+</script>
+
 <article>
   <h1>About Kate</h1>
 

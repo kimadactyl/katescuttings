@@ -7,7 +7,8 @@ A gardening blog for Kate Foale, built with Rails. The site has been running sin
 - **Purpose**: Personal gardening blog with photo galleries
 - **Owner**: Kate Foale (kim's mum)
 - **Domain**: katescuttings.net
-- **Current hosting**: Hetzner (Kamal)
+- **Hosting**: Hetzner VPS with Kamal 2
+- **CDN**: Cloudflare
 
 ## Tech Stack
 
@@ -22,28 +23,42 @@ A gardening blog for Kate Foale, built with Rails. The site has been running sin
 ## Key Features
 
 - Blog posts with publication dates and photo galleries
-- Lightbox image viewer (Luminous library via CDN)
+- Lightbox image viewer with captions (Luminous library via CDN)
 - Static pages: About Kate, The Garden, The Book
 - Admin area at `/admin` (Google OAuth, restricted to family domains)
 - FriendlyId for SEO-friendly URLs
+- RSS feed at `/blogs.rss`
+- JSON-LD structured data on all pages
+- Plausible analytics
 
 ## Local Development
 
 ```bash
 bin/rails server           # Start dev server at localhost:3000
 bin/rails db:migrate       # Run migrations
+bin/rails test             # Run tests
+bundle exec database_consistency  # Check DB constraints
 ```
 
-Requires Google OAuth credentials for admin access (see MIGRATION_PLAN.md).
+In development, admin access auto-logs in as the first user (no OAuth needed).
 
-## Migration Status
+## Deployment
 
-See `MIGRATION_PLAN.md` for full details. Currently:
-- ✓ Modernized from Webpacker to importmaps
-- ✓ Upgraded to Rails 8
-- ✓ Migrated to Hetzner with Kamal
-- ✓ Implemented Google OAuth for admin
-- Pending: Final cleanup and improvements
+Pushes to `master` branch auto-deploy via GitHub Actions.
+
+```bash
+kamal deploy      # Manual deploy
+kamal console     # Rails console on production
+kamal logs        # Tail production logs
+```
+
+## SEO & Metadata
+
+- Open Graph and Twitter Card meta tags on all pages
+- JSON-LD structured data (WebSite, Blog, BlogPosting, Person, Place, Book schemas)
+- Image titles used for alt text and lightbox captions
+- RSS feed with auto-discovery
+- Sitemap at `/sitemap.xml`
 
 ## ClaudeOnRails Configuration
 

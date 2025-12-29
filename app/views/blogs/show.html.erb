@@ -2,13 +2,14 @@
 <% provide :title, @blog.title %>
 <% provide :description, truncate(CGI.unescapeHTML(strip_tags(@blog.body.to_s)), length: 150) %>
 <% provide :og_type, 'article' %>
+<% provide :article_published_time, @blog.published_at.iso8601 %>
+<% provide :article_modified_time, @blog.updated_at.iso8601 %>
 <% provide :canonical, blog_url(@blog) %>
 <% if @blog.attachments.any? %>
   <% variant = @blog.attachments.first.image.variant(resize_to_limit: [1024, 1024])
      provide :image, main_app.url_for(variant.processed) %>
 <% end %>
 
-<%= content_for :structured_data do %>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -25,16 +26,14 @@
     "name": "Kate's Cuttings",
     "url": "https://katescuttings.net"
   },
-  "description": "<%= j truncate(CGI.unescapeHTML(strip_tags(@blog.body.to_s)), length: 150) %>"<% if @blog.attachments.any? %>,
+  "description": "<%= j truncate(CGI.unescapeHTML(strip_tags(@blog.body.to_s)), length: 300, separator: ' ') %>"<% if @blog.attachments.any? %>,
   "image": "<%= main_app.url_for(@blog.attachments.first.image.variant(resize_to_limit: [1024, 1024]).processed) %>"<% end %>
 }
 </script>
-<% end %>
 
 <article class="blog">
-  <div class="date"><span><%= @blog.formatted_date %></span></div>
-
   <h1><%= @blog.title %></h1>
+  <div class="date date--large"><span><%= @blog.formatted_date %></span></div>
 
   <div class="gallery blog__gallery" data-controller="lightbox">
     <%= render partial: 'gallery', locals: { attachments: @blog.attachments } %>

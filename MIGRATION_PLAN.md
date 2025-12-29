@@ -73,23 +73,30 @@
 - [x] **7.3** Update CI workflow
 - [x] **7.4** Deploy and verify
 
-## Phase 8: Final Cutover & Cleanup
+## Phase 8: Final Cutover & Cleanup ✓ COMPLETE
 
-- [ ] **8.1** Verify all functionality on Hetzner
-- [ ] **8.2** Decommission Digital Ocean droplet
-- [ ] **8.3** Clean up any legacy configuration
+- [x] **8.1** Verify all functionality on Hetzner
+- [x] **8.2** Set up Cloudflare CDN
+- [x] **8.3** Configure trusted proxy IPs for Cloudflare
 
-## Phase 9: Improvements & Maintenance
+## Phase 9: Improvements & Maintenance ✓ COMPLETE
 
-- [ ] **9.1** Improve metadata and SEO
-- [ ] **9.2** Tidy up rich text plugins and areas
-- [ ] **9.3** Set up Dependabot for dependency updates
-- [ ] **9.4** Update PostgreSQL version
-- [ ] **9.5** Update Ruby version
-- [ ] **9.6** Review security
-- [ ] **9.7** Set up cronjobs (Docker cleanup, cert renewal)
-- [ ] **9.8** Add Plausible analytics
-- [ ] **9.9** Explore performance improvements
+- [x] **9.1** Improve metadata and SEO (JSON-LD, Open Graph, article meta)
+- [x] **9.2** Add RSS feed with auto-discovery
+- [x] **9.3** Set up Renovate for dependency updates (7-day stability)
+- [x] **9.4** PostgreSQL 16 - already current
+- [x] **9.5** Ruby 3.3.6 - already current
+- [x] **9.6** Review security (UFW firewall, fail2ban, bundler-audit)
+- [x] **9.7** Set up cronjobs (Docker cleanup)
+- [x] **9.8** Add Plausible analytics
+- [x] **9.9** Performance improvements (eager loading, caching)
+- [x] **9.10** Add database_consistency gem and CI step
+- [x] **9.11** Add lightbox captions from image titles
+
+## Future Improvements
+
+- [ ] Auto-generate image descriptions using AI
+- [ ] Decommission Digital Ocean droplet (if still running)
 
 ---
 
@@ -99,10 +106,12 @@
 |---------|-------|
 | Domain | katescuttings.net |
 | Hetzner IP | 95.217.189.128 |
+| CDN | Cloudflare |
 | Container Registry | GitHub Container Registry (ghcr.io) |
 | Google OAuth Domains | thefoales.net, gfsc.studio |
 | Database | PostgreSQL 16 in Docker (via Kamal accessory) |
-| Previous Setup | Dokku on Digital Ocean (decommissioning) |
+| Analytics | Plausible |
+| Dependency Updates | Renovate (7-day stability) |
 
 ---
 
@@ -117,13 +126,17 @@
 | 5. Data migration | ✓ Complete |
 | 6. Google OAuth | ✓ Complete |
 | 7. Rails 8 upgrade | ✓ Complete |
-| 8. Final cutover | In Progress |
-| 9. Improvements | Pending |
+| 8. Final cutover | ✓ Complete |
+| 9. Improvements | ✓ Complete |
 
-## Next Steps
+## Migration Complete! 🎉
 
-1. Verify Google OAuth is working in production
-2. Decommission Digital Ocean droplet
-3. Set up Dependabot
-4. Add Plausible analytics
-5. Review and improve SEO/metadata
+The migration from Digital Ocean/Dokku to Hetzner/Kamal is fully complete. The site is now running on modern infrastructure with:
+
+- Rails 8.0.4 on Ruby 3.3.6
+- Kamal 2 deployment with auto-deploy via GitHub Actions
+- Cloudflare CDN
+- Full SEO optimization (JSON-LD, RSS, Open Graph)
+- Plausible analytics
+- Automated dependency updates via Renovate
+- Database consistency checks in CI

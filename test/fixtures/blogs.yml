@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  body: MyText
-  imported_id: 1
+spring_garden:
+  title: Spring Garden Update
+  slug: spring-garden-update
+  published_at: <%= 1.week.ago.to_fs(:db) %>
 
-two:
-  title: MyString
-  body: MyText
-  imported_id: 1
+summer_flowers:
+  title: Summer Flowers in Bloom
+  slug: summer-flowers-in-bloom
+  published_at: <%= 2.weeks.ago.to_fs(:db) %>

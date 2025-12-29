@@ -14,6 +14,14 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
+    # Auto-login in development
+    if Rails.env.development? && !logged_in?
+      if (user = User.first)
+        session[:user_id] = user.id
+        return
+      end
+    end
+
     unless logged_in?
       flash[:error] = "Please sign in to access this area."
       redirect_to login_path

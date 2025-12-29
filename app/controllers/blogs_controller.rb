@@ -13,6 +13,11 @@ class BlogsController < ApplicationController
     end
     @grouped_blogs = group_teasers_by_month(@blogs)
     @almanac = Rails.cache.fetch("blog_almanac", expires_in: 1.hour) { Blog.almanac }
+
+    respond_to do |format|
+      format.html
+      format.rss { @blogs = Blog.teasers.includes(:rich_text_body).limit(20) }
+    end
   end
 
   def show

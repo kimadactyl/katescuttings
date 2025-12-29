@@ -19,7 +19,14 @@
     margin-bottom: 2rem;
   }
   &__more {
+    display: inline-block;
+    margin-left: 0.75em;
     font-style: italic;
+    font-weight: 600;
+    color: $primary;
+    &:hover {
+      text-decoration: underline;
+    }
   }
   + h3 {
     margin-top: 4rem;

@@ -1,6 +1,27 @@
 <% provide :template, 'columns' %>
 <% provide :title, "The Book" %>
 <% provide :description, "Kate's book is now available" %>
+<% provide :image, image_url('pages/book_small.jpg') %>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": "Kate's Cuttings",
+  "description": "An entertaining read about Kate's long experience of gardening at 'Charnwood', a Yellow Book Garden in Nottinghamshire. Full of tips, stories, planting ideas and easy to follow explanations of how to be a successful gardener.",
+  "url": "<%= book_url %>",
+  "author": {
+    "@type": "Person",
+    "name": "Kate Foale"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "8.50",
+    "priceCurrency": "GBP",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
 
 <article>
   <h1>Book now available!</h1>

@@ -2,6 +2,35 @@
 <% provide :title, "Articles" %>
 <% provide :description, "All the blog posts on Kate's Cuttings" %>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Kate's Cuttings",
+  "description": "Articles and seasonal updates from Kate's Cuttings, featuring gardening tips, planting ideas, and photos from Charnwood garden in Nottinghamshire.",
+  "url": "<%= root_url %>",
+  "author": {
+    "@type": "Person",
+    "name": "Kate Foale"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kate's Cuttings",
+    "url": "https://katescuttings.net"
+  },
+  "blogPost": [
+    <% @grouped_blogs.flat_map { |m| m[1] }.first(10).each_with_index do |blog, index| %>
+    {
+      "@type": "BlogPosting",
+      "headline": "<%= j blog.title %>",
+      "url": "<%= blog_url(blog) %>",
+      "datePublished": "<%= blog.published_at.iso8601 %>"
+    }<%= index < [@grouped_blogs.flat_map { |m| m[1] }.count, 10].min - 1 ? ',' : '' %>
+    <% end %>
+  ]
+}
+</script>
+
 <div class="layout__main teasers">
   <% @grouped_blogs.each do |month| %>
     <h3 class="teaser__month"><%= month[0] %></h3>
@@ -10,7 +39,7 @@
         <div class="date"><span><%= blog.formatted_date %></span></div>
         <h2 class="teaser__title"><%= link_to blog.title, blog_url(blog) %></h2>
         <div class="teaser__body">
-          <%= truncate(CGI.unescapeHTML(strip_tags(blog.body.to_s)), length: 600) %>
+          <%= teaser_text(blog.body) %>
           <%= link_to "Read more…", blog_url(blog), class: "teaser__more" %>
         </div>
         <div class="gallery teaser__gallery" data-controller="lightbox">

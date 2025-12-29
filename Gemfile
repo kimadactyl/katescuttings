@@ -61,6 +61,8 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  # Pin minitest for Rails 8 compatibility
+  gem 'minitest', '~> 5.25'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

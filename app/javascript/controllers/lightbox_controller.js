@@ -11,10 +11,18 @@ export default class extends Controller {
 
   initLightbox() {
     const items = this.itemTargets
+    const luminousOpts = {
+      caption: (trigger) => trigger.dataset.caption || ''
+    }
+    const galleryOpts = {
+      arrowNavigation: true
+    }
+
     if (items.length === 1) {
-      new window.Luminous(items[0])
+      new window.Luminous(items[0], luminousOpts)
     } else if (items.length > 1) {
-      new window.LuminousGallery(items, { arrowNavigation: true })
+      // LuminousGallery(elements, galleryOpts, luminousOpts)
+      new window.LuminousGallery(items, galleryOpts, luminousOpts)
     }
   }
 }

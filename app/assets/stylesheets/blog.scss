@@ -1,16 +1,34 @@
+@import "variables";
+
 .blog {
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 5rem;
   h1 {
-    margin: 1rem 0;
+    margin: 0.5rem 0 1rem;
+  }
+  &__gallery {
+    margin-bottom: 1rem;
+    a {
+      margin-right: 1rem;
+      display: inline-block;
+    }
   }
   &__links {
     margin-top: 3rem;
     a {
-      display: inline-block
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: $primary;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+      &:hover {
+        background-color: darken($primary, 10%);
+      }
     }
     a:nth-child(2) {
-      float: right
+      float: right;
     }
   }
 }

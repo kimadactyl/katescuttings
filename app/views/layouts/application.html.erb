@@ -4,6 +4,20 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= render "layouts/meta_tags" %>
+    <%= auto_discovery_link_tag :rss, blogs_url(format: :rss), title: "Kate's Cuttings RSS Feed" %>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Kate's Cuttings",
+      "url": "https://katescuttings.net",
+      "description": "A gardening blog sharing tips, seasonal updates, and beautiful photos from Charnwood, a cottage garden in Nottinghamshire developed by Kate Foale since 1987.",
+      "author": {
+        "@type": "Person",
+        "name": "Kate Foale"
+      }
+    }
+    </script>
     <%= yield :structured_data %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/trix@2.1.12/dist/trix.min.css" crossorigin="anonymous">
@@ -41,6 +55,7 @@
         <li>Phone: 0115 9375148</li>
         <li>Email: <%= mail_to "kate@katescuttings.net" %></li>
         <li>Twitter: <%= link_to "@KatesCuttings", "https://twitter.com/KatesCuttings" %></li>
+        <li>RSS: <%= link_to "Subscribe to RSS", blogs_url(format: :rss) %></li>
       </ul>
       <div class="footer__created">
         Site created by <%= link_to "Geeks for Social Change", "https://gfsc.studio" %>
