@@ -51,8 +51,9 @@ FROM base
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /app /app
 
-# Run as non-root user
-RUN groupadd --system --gid 1000 rails && \
+# Create required directories and run as non-root user
+RUN mkdir -p db log storage tmp/pids tmp/cache tmp/sockets && \
+    groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
 USER 1000:1000
