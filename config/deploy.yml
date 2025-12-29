@@ -14,6 +14,9 @@ servers:
 proxy:
   ssl: true
   host: katescuttings.net
+  app_port: 3000
+  healthcheck:
+    path: /up
 
 # GitHub Container Registry
 registry:

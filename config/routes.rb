@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # Health check for Kamal/load balancers
+  get "up" => "rails/health#show", as: :rails_health_check
+
   root 'blogs#index'
   resources :blogs, only: %i[show index]
 
