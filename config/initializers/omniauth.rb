@@ -12,3 +12,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 end
 
 OmniAuth.config.allowed_request_methods = [:post]
+
+# Set the full host for callbacks in production
+OmniAuth.config.full_host = Rails.env.production? ? 'https://katescuttings.net' : nil
