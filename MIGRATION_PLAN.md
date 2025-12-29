@@ -4,14 +4,15 @@
 
 | Component | Current | Notes |
 |-----------|---------|-------|
-| Ruby | 3.3.6 | Recent |
-| Rails | 7.1.x | Recent, could upgrade to 8.x |
-| Database | PostgreSQL | On Digital Ocean |
-| Assets | Webpacker 5 | Legacy, needs migration |
-| JS Framework | Turbolinks | Legacy, needs Turbo |
-| Image Storage | Active Storage (local disk) | ~stored in `storage/` dir |
-| Auth | HTTP Basic (ENV vars) | Simple but not great UX |
-| Deployment | Unknown/manual | No config files found |
+| Ruby | 3.3.6 | Current |
+| Rails | 8.0.4 | Upgraded from 7.1.x |
+| Database | PostgreSQL 16 | On Hetzner (Docker) |
+| Assets | Propshaft + importmaps | Migrated from Webpacker |
+| JS Framework | Turbo + Stimulus | Migrated from Turbolinks |
+| Image Storage | Active Storage (local disk) | Persistent Docker volume |
+| Auth | Google OAuth | Domain-restricted (thefoales.net, gfsc.studio) |
+| Deployment | Kamal 2 | Auto-deploy via GitHub Actions |
+| Hosting | Hetzner | Migrated from Digital Ocean |
 
 ## Phase 1: Git Housekeeping ✓ COMPLETE
 
@@ -36,64 +37,72 @@
 - [x] **3.4** Configure `.kamal/secrets` for environment variables
 - [x] **3.5** Set up GitHub Actions for auto-deploy on push to `main`
 
-## Phase 4: Hetzner Server Setup
+## Phase 4: Hetzner Server Setup ✓ COMPLETE
 
-- [ ] **4.1** Provision Hetzner VPS (recommend: CX21 or higher)
-- [ ] **4.2** Point domain DNS to Hetzner IP
-- [ ] **4.3** Install Docker on Hetzner server
-- [ ] **4.4** Set up PostgreSQL (container or managed)
-- [ ] **4.5** Set up persistent storage volume for Active Storage files
-- [ ] **4.6** Configure SSL (Kamal handles via Traefik)
+- [x] **4.1** Provision Hetzner VPS
+- [x] **4.2** Point domain DNS to Hetzner IP (95.217.189.128)
+- [x] **4.3** Install Docker on Hetzner server
+- [x] **4.4** Set up PostgreSQL (container via Kamal accessory)
+- [x] **4.5** Set up persistent storage volume for Active Storage files
+- [x] **4.6** Configure SSL (Kamal handles via kamal-proxy)
 
-## Phase 5: Data Migration (DO → Local) ✓ COMPLETE
-
-SSH access restored to DO server:
+## Phase 5: Data Migration (DO → Hetzner) ✓ COMPLETE
 
 - [x] **5.1** Restored SSH access via DO web console
 - [x] **5.2** Exported database via `dokku postgres:export`
 - [x] **5.3** Downloaded Active Storage files via rsync (729MB)
 - [x] **5.4** Imported database locally with Active Storage migrations
 - [x] **5.5** Verified: 210 blogs, 309 attachments, 332 files
+- [x] **5.6** Migrated data to Hetzner production server
 
-## Phase 6: Google OAuth Login
+## Phase 6: Google OAuth Login ✓ COMPLETE
 
-- [ ] **6.1** Create Google Cloud project
-- [ ] **6.2** Configure OAuth consent screen
-- [ ] **6.3** Create OAuth 2.0 credentials (restrict to your domains)
-- [ ] **6.4** Add `omniauth-google-oauth2` gem
-- [ ] **6.5** Create User model with email whitelist (you + mum)
-- [ ] **6.6** Implement sessions controller
-- [ ] **6.7** Protect admin routes with Google auth
-- [ ] **6.8** Remove old HTTP Basic auth
+- [x] **6.1** Create Google Cloud project
+- [x] **6.2** Configure OAuth consent screen
+- [x] **6.3** Create OAuth 2.0 credentials (restrict to family domains)
+- [x] **6.4** Add `omniauth-google-oauth2` gem
+- [x] **6.5** Create User model with domain whitelist
+- [x] **6.6** Implement sessions controller
+- [x] **6.7** Protect admin routes with Google auth
+- [x] **6.8** Remove old HTTP Basic auth
 
-## Phase 7: Final Cutover
+## Phase 7: Rails 8 Upgrade ✓ COMPLETE
 
-- [ ] **7.1** Deploy to Hetzner via Kamal
-- [ ] **7.2** Run smoke tests on Hetzner
-- [ ] **7.3** Update DNS TTL low, then switch
-- [ ] **7.4** Monitor for issues
-- [ ] **7.5** Decommission Digital Ocean droplet
+- [x] **7.1** Update Rails gem to 8.0.4
+- [x] **7.2** Fix deprecated configurations
+- [x] **7.3** Update CI workflow
+- [x] **7.4** Deploy and verify
+
+## Phase 8: Final Cutover & Cleanup
+
+- [ ] **8.1** Verify all functionality on Hetzner
+- [ ] **8.2** Decommission Digital Ocean droplet
+- [ ] **8.3** Clean up any legacy configuration
+
+## Phase 9: Improvements & Maintenance
+
+- [ ] **9.1** Improve metadata and SEO
+- [ ] **9.2** Tidy up rich text plugins and areas
+- [ ] **9.3** Set up Dependabot for dependency updates
+- [ ] **9.4** Update PostgreSQL version
+- [ ] **9.5** Update Ruby version
+- [ ] **9.6** Review security
+- [ ] **9.7** Set up cronjobs (Docker cleanup, cert renewal)
+- [ ] **9.8** Add Plausible analytics
+- [ ] **9.9** Explore performance improvements
 
 ---
-
-## Quick Wins Available Now
-
-These can be done immediately without infrastructure:
-
-1. Rename master → main
-2. Start Webpacker → Propshaft migration
-3. Set up Kamal config (can test locally with Docker)
 
 ## Configuration
 
 | Setting | Value |
 |---------|-------|
 | Domain | katescuttings.net |
-| Hetzner Region | UK (Falkenstein or Nuremberg) |
+| Hetzner IP | 95.217.189.128 |
 | Container Registry | GitHub Container Registry (ghcr.io) |
 | Google OAuth Domains | thefoales.net, gfsc.studio |
-| Database | PostgreSQL in Docker (via Kamal accessory) |
-| Current Setup | Dokku on Digital Ocean (migrating away) |
+| Database | PostgreSQL 16 in Docker (via Kamal accessory) |
+| Previous Setup | Dokku on Digital Ocean (decommissioning) |
 
 ---
 
@@ -101,19 +110,20 @@ These can be done immediately without infrastructure:
 
 | Phase | Status |
 |-------|--------|
-| 1. Git housekeeping | Complete |
-| 2. Rails modernization | Complete |
-| 3. Kamal setup | Complete |
-| 4. Hetzner server | Pending |
-| 5. Data migration | Complete (local) |
-| 6. Google OAuth | Pending |
-| 7. Final cutover | Pending |
+| 1. Git housekeeping | ✓ Complete |
+| 2. Rails modernization | ✓ Complete |
+| 3. Kamal setup | ✓ Complete |
+| 4. Hetzner server | ✓ Complete |
+| 5. Data migration | ✓ Complete |
+| 6. Google OAuth | ✓ Complete |
+| 7. Rails 8 upgrade | ✓ Complete |
+| 8. Final cutover | In Progress |
+| 9. Improvements | Pending |
 
 ## Next Steps
 
-1. Provision Hetzner server (CX21 or higher, Ubuntu 22.04)
-2. Create GitHub Personal Access Token for ghcr.io
-3. Set environment variables and deploy with `kamal setup`
-4. Migrate data from DO to Hetzner
-5. Implement Google OAuth
-6. Final DNS cutover
+1. Verify Google OAuth is working in production
+2. Decommission Digital Ocean droplet
+3. Set up Dependabot
+4. Add Plausible analytics
+5. Review and improve SEO/metadata
