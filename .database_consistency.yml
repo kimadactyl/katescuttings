@@ -1,0 +1,28 @@
+# database_consistency configuration
+# https://github.com/djezzzl/database_consistency
+
+# Enabled checks
+enabled:
+  - ColumnPresenceChecker
+  - ForeignKeyChecker
+  - ForeignKeyTypeChecker
+  - BelongsToPresenceChecker
+  - MissingUniqueIndexChecker
+  - MissingIndexChecker
+  - NullConstraintChecker
+  - PrimaryKeyTypeChecker
+  - RedundantIndexChecker
+  - RedundantUniqueIndexChecker
+
+# Ignore Rails internal tables
+ignore_tables:
+  - ar_internal_metadata
+  - schema_migrations
+
+# Ignore Action Text and Active Storage tables (managed by Rails)
+ignore_models:
+  - ActionText::RichText
+  - ActionText::EncryptedRichText
+  - ActiveStorage::Blob
+  - ActiveStorage::Attachment
+  - ActiveStorage::VariantRecord

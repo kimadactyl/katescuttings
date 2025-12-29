@@ -51,6 +51,10 @@ jobs:
         run: |
           bundle exec rails test
 
+      - name: Database consistency check
+        run: |
+          bundle exec database_consistency
+
   lint:
     runs-on: ubuntu-latest
 

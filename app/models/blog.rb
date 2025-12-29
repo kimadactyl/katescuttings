@@ -3,6 +3,7 @@ class Blog < ApplicationRecord
   friendly_id :title, use: :slugged
 
   validates :title, :published_at, presence: true
+  validates :slug, uniqueness: true
   has_rich_text :body
   has_many :attachments
 

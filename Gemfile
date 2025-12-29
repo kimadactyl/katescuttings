@@ -43,6 +43,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
   gem 'bundler-audit'
+  gem 'database_consistency', require: false
 end
 
 group :development do

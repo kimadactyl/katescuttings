@@ -132,6 +132,8 @@ GEM
       fiber-local (~> 1.1)
       json
     crass (1.0.6)
+    database_consistency (2.1.1)
+      activerecord (>= 3.2)
     date (3.5.1)
     debug_inspector (1.2.0)
     dotenv (3.2.0)
@@ -522,6 +524,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   claude-on-rails
+  database_consistency
   dotenv-rails
   friendly_id
   image_processing (~> 1.2)
