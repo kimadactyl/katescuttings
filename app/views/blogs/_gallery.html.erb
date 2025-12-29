@@ -1,8 +1,8 @@
 <% attachments.each do |a| %>
   <% next if a.id.nil? %>
   <%= link_to url_for(a.image.variant(resize_to_limit: [2048, 2048])), class: 'lightbox', data: { lightbox_target: 'item', caption: a.title.presence || a.alt_text } do %>
-    <%= image_tag a.image.variant(resize_to_fill: [150, 150]),
-          srcset: "#{url_for(a.image.variant(resize_to_fill: [150, 150]))} 1x, #{url_for(a.image.variant(resize_to_fill: [300, 300]))} 2x",
+    <%= image_tag a.image.variant(resize_to_fill: [250, 250]),
+          srcset: "#{url_for(a.image.variant(resize_to_fill: [250, 250]))} 1x, #{url_for(a.image.variant(resize_to_fill: [500, 500]))} 2x",
           alt: a.alt_text %>
   <% end %>
 <% end %>
