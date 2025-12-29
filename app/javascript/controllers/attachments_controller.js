@@ -7,6 +7,8 @@ export default class extends Controller {
 
   connect() {
     this.index = this.listTarget.querySelectorAll('.attachment-card').length
+    // Auto-resize all existing textareas
+    this.element.querySelectorAll('textarea').forEach(ta => this.autoResize(ta))
   }
 
   add(event) {
@@ -61,5 +63,31 @@ export default class extends Controller {
 
       reader.readAsDataURL(input.files[0])
     }
+  }
+
+  // Auto-resize textarea as content grows
+  resize(event) {
+    this.autoResize(event.target)
+  }
+
+  autoResize(textarea) {
+    textarea.style.height = 'auto'
+    textarea.style.height = textarea.scrollHeight + 'px'
+  }
+
+  // Copy caption to alt text until alt text is manually edited
+  syncCaption(event) {
+    const card = event.target.closest('.attachment-card')
+    const altTextarea = card.querySelector('textarea[name*="alt_text"]')
+
+    if (altTextarea && !altTextarea.dataset.edited) {
+      altTextarea.value = event.target.value
+      this.autoResize(altTextarea)
+    }
+  }
+
+  // Mark alt text as manually edited
+  markEdited(event) {
+    event.target.dataset.edited = 'true'
   }
 }

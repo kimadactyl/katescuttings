@@ -1,7 +1,7 @@
-<%= form_with model: [:admin, @blog] do |f| %>
+<%= form_with model: [:admin, @blog], html: { class: @blog.new_record? ? 'admin-form--new' : '' } do |f| %>
   <div class="form-section">
     <%= f.label :title, class: 'form-label' %>
-    <%= f.text_field :title, class: 'form__title' %>
+    <%= f.text_field :title, class: 'form__title', autofocus: @blog.new_record? %>
   </div>
 
   <div class="form-section">
@@ -17,6 +17,12 @@
       <% @blog.attachments.each do |attachment| %>
         <%= f.fields_for :attachments, attachment do |af| %>
           <%= render 'attachment_fields', f: af, attachment: attachment %>
+        <% end %>
+      <% end %>
+      <% if @blog.new_record? %>
+        <%# Start new posts with one empty image slot %>
+        <%= f.fields_for :attachments, Attachment.new do |af| %>
+          <%= render 'attachment_fields', f: af, attachment: Attachment.new %>
         <% end %>
       <% end %>
     </div>

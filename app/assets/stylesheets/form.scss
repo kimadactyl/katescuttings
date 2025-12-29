@@ -32,8 +32,12 @@
 
 .admin-form__back {
   margin-top: 2rem;
-  a {
-    color: #666;
+}
+
+// Taller Trix editor for new posts
+.admin-form--new {
+  trix-editor {
+    min-height: 400px;
   }
 }
 
@@ -86,7 +90,7 @@ form {
 // Attachment card
 .attachment-card {
   display: grid;
-  grid-template-columns: 150px 1fr auto;
+  grid-template-columns: 150px 1fr;
   gap: 1rem;
   padding: 1rem;
   background: #f9f9f9;
@@ -99,12 +103,21 @@ form {
   }
 }
 
+.attachment-card__left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .attachment-card--deleted {
   opacity: 0.5;
   background: #fee;
   .attachment-card__fields,
   .attachment-card__remove {
     display: none;
+  }
+  .attachment-card__image {
+    pointer-events: none;
   }
 }
 
@@ -186,24 +199,36 @@ form {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 0.95rem;
+  font-family: inherit;
+  line-height: 1.4;
+  resize: none;
+  overflow: hidden;
+  min-height: 2.5rem;
 }
 
 .attachment-card__actions {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 150px;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 }
 
 .attachment-card__remove {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  background: none;
+  justify-content: center;
+  gap: 0.25rem;
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  background: white;
   border: 1px solid #ccc;
   border-radius: 4px;
   color: #666;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
 
