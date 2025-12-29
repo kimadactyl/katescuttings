@@ -1,13 +1,8 @@
-//
-// Provides a drop-in pointer for the default Trix stylesheet that will format the toolbar and
-// the trix-editor content (whether displayed or under editing). Feel free to incorporate this
-// inclusion directly in any other asset bundle and remove this file.
-//
-// Trix styles loaded from CDN in application.css
+// Action Text / Trix editor styles
+// Trix base styles loaded from CDN in layout
 
-// We need to override trix.css’s image gallery styles to accommodate the
-// <action-text-attachment> element we wrap around attachments. Otherwise,
-// images in galleries will be squished by the max-width: 33%; rule.
+// Override trix.css's image gallery styles to accommodate the
+// <action-text-attachment> element we wrap around attachments.
 .trix-content {
   .attachment-gallery {
     > action-text-attachment,
@@ -33,4 +28,9 @@
       max-width: 100% !important;
     }
   }
+}
+
+// Luminous lightbox overrides
+.lum-lightbox {
+  background: rgba(0, 0, 0, 0.9) !important;
 }
