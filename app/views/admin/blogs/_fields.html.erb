@@ -1,11 +1,11 @@
 <%= form_with model: [:admin, @blog], html: { class: @blog.new_record? ? 'admin-form--new' : '' } do |f| %>
   <div class="form-section">
-    <%= f.label :title, class: 'form-label' %>
+    <h3 class="form-section__title"><%= f.label :title, 'Title' %></h3>
     <%= f.text_field :title, class: 'form__title', autofocus: @blog.new_record? %>
   </div>
 
   <div class="form-section">
-    <%= f.label :body, class: 'form-label' %>
+    <h3 class="form-section__title"><%= f.label :body, 'Body' %></h3>
     <%= f.rich_text_area :body %>
   </div>
 
@@ -43,7 +43,7 @@
   </div>
 
   <div class="form-section">
-    <%= f.label :published_at, 'Publication date', class: 'form-label' %>
+    <h3 class="form-section__title"><%= f.label :published_at, 'Publication date' %></h3>
     <%= f.date_field :published_at, class: 'form-date' %>
   </div>
 
