@@ -1,0 +1,60 @@
+name: Dependabot Auto-Merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  schedule:
+    # Run daily at 9am to check for PRs ready to merge
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Fetch Dependabot metadata
+        if: github.event_name == 'pull_request'
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Wait for CI and auto-merge (on PR events)
+        if: github.event_name == 'pull_request'
+        run: |
+          # Calculate days since PR was opened
+          PR_CREATED=$(gh pr view ${{ github.event.pull_request.number }} --json createdAt -q '.createdAt')
+          PR_AGE_DAYS=$(( ($(date +%s) - $(date -d "$PR_CREATED" +%s)) / 86400 ))
+
+          echo "PR is $PR_AGE_DAYS days old"
+
+          if [ $PR_AGE_DAYS -ge 7 ]; then
+            echo "PR is 7+ days old, enabling auto-merge"
+            gh pr merge --auto --squash "${{ github.event.pull_request.number }}"
+          else
+            echo "PR is less than 7 days old, skipping auto-merge for now"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check old Dependabot PRs (on schedule)
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          # Find all open Dependabot PRs older than 7 days
+          gh pr list --author "dependabot[bot]" --state open --json number,createdAt,title | \
+          jq -r '.[] | select((now - (.createdAt | fromdateiso8601)) / 86400 >= 7) | "\(.number) \(.title)"' | \
+          while read -r PR_NUM PR_TITLE; do
+            if [ -n "$PR_NUM" ]; then
+              echo "Enabling auto-merge for PR #$PR_NUM: $PR_TITLE"
+              gh pr merge --auto --squash "$PR_NUM" || echo "Could not enable auto-merge for #$PR_NUM"
+            fi
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
