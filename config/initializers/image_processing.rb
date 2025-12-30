@@ -58,23 +58,24 @@ module ImageProcessing
 end
 
 # Ensure watermark is always applied AFTER resize operations
-Rails.application.config.to_prepare do
-  ActiveStorage::Transformers::ImageProcessingTransformer.class_eval do
-    private
+# Use a module with prepend to avoid alias_method issues with Rails reloading
+module WatermarkOperationsReordering
+  def operations
+    ops = super
 
-    alias_method :original_operations, :operations
-
-    def operations
-      ops = original_operations
-
-      # Find and move watermark operation to the end
-      watermark_op = ops.find { |op| op.first.to_s == "watermark" }
-      if watermark_op
-        ops = ops.reject { |op| op.first.to_s == "watermark" }
-        ops = ops + [watermark_op]
-      end
-
-      ops
+    # Find and move watermark operation to the end
+    watermark_op = ops.find { |op| op.first.to_s == "watermark" }
+    if watermark_op
+      ops = ops.reject { |op| op.first.to_s == "watermark" }
+      ops = ops + [watermark_op]
     end
+
+    ops
+  end
+end
+
+Rails.application.config.to_prepare do
+  unless ActiveStorage::Transformers::ImageProcessingTransformer.ancestors.include?(WatermarkOperationsReordering)
+    ActiveStorage::Transformers::ImageProcessingTransformer.prepend(WatermarkOperationsReordering)
   end
 end

@@ -4,7 +4,27 @@ module Admin
     before_action :set_blog, only: %i[edit update destroy]
 
     def index
-      @blogs = Blog.order(created_at: :desc).page(params[:page]).per(25)
+      @blogs = Blog.includes(attachments: { image_attachment: :blob })
+
+      # Search
+      if params[:q].present?
+        @blogs = @blogs.where("title ILIKE ?", "%#{params[:q]}%")
+      end
+
+      # Filter by status
+      case params[:status]
+      when "published"
+        @blogs = @blogs.where("published_at <= ?", Time.current)
+      when "scheduled"
+        @blogs = @blogs.where("published_at > ?", Time.current)
+      end
+
+      # Sorting
+      sort_column = %w[title created_at published_at].include?(params[:sort]) ? params[:sort] : "created_at"
+      sort_direction = params[:direction] == "asc" ? :asc : :desc
+      @blogs = @blogs.order(sort_column => sort_direction)
+
+      @blogs = @blogs.page(params[:page]).per(25)
     end
 
     def new
@@ -19,15 +39,19 @@ module Admin
 
       if @blog.save
         flash[:success] = "Successfully created new blog"
-        redirect_to edit_admin_blog_path(@blog)
+        redirect_to admin_blogs_path
       else
         render "new"
       end
     end
 
     def update
-      @blog.update(blog_params)
-      redirect_to edit_admin_blog_path(@blog)
+      if @blog.update(blog_params)
+        flash[:success] = "Post updated"
+        redirect_to admin_blogs_path
+      else
+        render "edit"
+      end
     end
 
     def destroy
