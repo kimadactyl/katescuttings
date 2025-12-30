@@ -33,11 +33,11 @@
 
 <div class="layout__main teasers">
   <% @grouped_blogs.each do |month| %>
-    <h2 class="teaser__month"><%= month[0] %></h2>
+    <p class="teaser__month"><%= month[0] %></p>
     <% month[1].each do |blog| %>
       <article class="teaser">
         <div class="date"><span><%= blog.formatted_date %></span></div>
-        <h3 class="teaser__title"><%= link_to blog.title, blog_url(blog) %></h3>
+        <h2 class="teaser__title"><%= link_to blog.title, blog_url(blog) %></h2>
         <div class="teaser__body">
           <%= teaser_text(blog.body) %>
           <%= link_to "Read more…", blog_url(blog), class: "teaser__more" %>
