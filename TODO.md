@@ -7,3 +7,4 @@
 - [ ] Investigate accessibility improvements
 - [ ] Data-table-ify admin
 - [ ] Help mum migrate from Twitter to Bluesky/Mastodon + investigate site integration
+- [ ] Improve initial page load performance - can we lazy load images further down the page?
