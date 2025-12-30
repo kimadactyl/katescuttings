@@ -1,34 +1,43 @@
 class GalleryController < ApplicationController
   IMAGES_PER_PAGE = 60
-  EAGER_LOAD_COUNT = 15  # First ~3 rows load immediately
+  EAGER_LOAD_COUNT = 15
+
+  # Month names starting from current month
+  MONTHS = Date::MONTHNAMES.compact.freeze
 
   def index
-    @view_mode = params[:view].presence || "date"
+    @selected_month = params[:month].presence
+    @months = months_from_current
 
     base_query = Attachment
       .joins(:blog)
       .includes(:blog, image_attachment: :blob)
       .where.not(blogs: { published_at: nil })
 
-    if @view_mode == "month"
-      # Group by month name (all Decembers together, etc.), ordered by date within each month
-      @attachments_by_month = base_query
-        .order(Arel.sql("EXTRACT(MONTH FROM blogs.published_at) DESC, blogs.published_at DESC, attachments.id ASC"))
-        .page(params[:page])
-        .per(IMAGES_PER_PAGE)
-        .group_by { |a| a.blog.published_at.strftime("%B") }
+    if @selected_month.present?
+      # Filter by month name (all years), no pagination
+      month_number = Date::MONTHNAMES.index(@selected_month)
       @attachments = base_query
-        .order(Arel.sql("EXTRACT(MONTH FROM blogs.published_at) DESC, blogs.published_at DESC, attachments.id ASC"))
-        .page(params[:page])
-        .per(IMAGES_PER_PAGE)
+        .where("EXTRACT(MONTH FROM blogs.published_at) = ?", month_number)
+        .order(Arel.sql("blogs.published_at DESC, attachments.id ASC"))
+      @paginated = false
     else
-      # Simple reverse chronological order
+      # All images, reverse chronological, paginated
       @attachments = base_query
         .order(Arel.sql("blogs.published_at DESC, attachments.id ASC"))
         .page(params[:page])
         .per(IMAGES_PER_PAGE)
+      @paginated = true
     end
 
     @eager_load_count = EAGER_LOAD_COUNT
+  end
+
+  private
+
+  def months_from_current
+    current_month = Date.current.month
+    # Rotate months so current month is first
+    MONTHS.rotate(current_month - 1)
   end
 end

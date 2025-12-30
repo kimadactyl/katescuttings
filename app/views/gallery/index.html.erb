@@ -2,37 +2,31 @@
 <% provide :title, "Gallery" %>
 <% provide :description, "Browse all photos from Kate's Cuttings garden blog" %>
 
-<div class="gallery-page">
-  <div class="gallery-page__header">
-    <h1>Gallery</h1>
-    <div class="gallery-page__controls">
-      <%= link_to "By Date", gallery_path(view: "date"),
-          class: "gallery-page__toggle #{'gallery-page__toggle--active' if @view_mode == 'date'}" %>
-      <%= link_to "By Month", gallery_path(view: "month"),
-          class: "gallery-page__toggle #{'gallery-page__toggle--active' if @view_mode == 'month'}" %>
-    </div>
+<article class="gallery-page">
+  <h1>Gallery</h1>
+
+  <div class="gallery-page__filters">
+    <%= link_to "All", gallery_path,
+        class: "gallery-page__filter #{'gallery-page__filter--active' if @selected_month.nil?}" %>
+    <% @months.each do |month| %>
+      <%= link_to month[0..2], gallery_path(month: month),
+          class: "gallery-page__filter #{'gallery-page__filter--active' if @selected_month == month}" %>
+    <% end %>
   </div>
 
-  <% if @view_mode == "month" %>
-    <% index = 0 %>
-    <% @attachments_by_month.each do |month_name, attachments| %>
-      <h2 class="gallery-page__month"><%= month_name %></h2>
-      <div class="gallery-page__masonry" data-controller="lightbox">
-        <% attachments.each do |attachment| %>
-          <%= render partial: 'gallery_item', locals: { attachment: attachment, eager: index < @eager_load_count } %>
-          <% index += 1 %>
-        <% end %>
-      </div>
-    <% end %>
-  <% else %>
-    <div class="gallery-page__masonry" data-controller="lightbox">
-      <% @attachments.each_with_index do |attachment, index| %>
-        <%= render partial: 'gallery_item', locals: { attachment: attachment, eager: index < @eager_load_count } %>
-      <% end %>
-    </div>
+  <% if @selected_month.present? %>
+    <p class="gallery-page__showing">Showing images from <strong><%= @selected_month %></strong> across all years</p>
   <% end %>
 
-  <div class="gallery-page__pagination">
-    <%= paginate @attachments %>
+  <div class="gallery-page__masonry" data-controller="lightbox">
+    <% @attachments.each_with_index do |attachment, index| %>
+      <%= render partial: 'gallery_item', locals: { attachment: attachment, eager: index < @eager_load_count } %>
+    <% end %>
   </div>
-</div>
+
+  <% if @paginated && @attachments.respond_to?(:total_pages) && @attachments.total_pages > 1 %>
+    <div class="gallery-page__pagination">
+      <%= paginate @attachments %>
+    </div>
+  <% end %>
+</article>

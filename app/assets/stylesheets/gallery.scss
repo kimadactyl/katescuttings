@@ -1,59 +1,52 @@
 @import "variables";
 
 .gallery-page {
-  &__header {
+  h1 {
+    margin-top: 0;
+  }
+
+  &__filters {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 2rem;
-
-    h1 {
-      margin: 0;
-    }
-  }
-
-  &__controls {
-    display: flex;
     gap: 0.5rem;
+    margin-bottom: 1.5rem;
   }
 
-  &__toggle {
+  &__filter {
     display: inline-block;
-    padding: 0.5rem 1rem;
-    border: 1px solid $primary;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid $light-grey;
     border-radius: 4px;
     text-decoration: none;
-    color: $primary;
-    font-size: 0.9rem;
-    transition: background-color 0.2s, color 0.2s;
+    color: $dark-grey;
+    font-size: 0.85rem;
+    transition: background-color 0.2s, border-color 0.2s;
 
     &:hover {
-      background-color: rgba($primary, 0.1);
+      border-color: $primary;
+      color: $primary;
     }
 
     &--active {
       background-color: $primary;
+      border-color: $primary;
       color: $white;
 
       &:hover {
         background-color: darken($primary, 10%);
+        border-color: darken($primary, 10%);
+        color: $white;
       }
     }
   }
 
-  &__month {
-    font-family: $garamond;
-    text-transform: uppercase;
-    font-weight: 400;
-    font-size: 1.5rem;
-    margin: 2rem 0 1rem;
-    text-align: center;
-    color: $primary;
+  &__showing {
+    color: $medium-grey;
+    font-style: italic;
+    margin-bottom: 1.5rem;
 
-    &:first-of-type {
-      margin-top: 0;
+    strong {
+      color: $primary;
     }
   }
 

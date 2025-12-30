@@ -14,27 +14,26 @@ class GalleryControllerTest < ActionDispatch::IntegrationTest
     assert_select ".gallery-page__masonry"
   end
 
-  test "gallery page has view toggle controls" do
+  test "gallery page has month filter buttons" do
     get gallery_url
 
-    assert_select ".gallery-page__toggle", 2
-    assert_select ".gallery-page__toggle--active", 1
+    # Should have All button plus 12 month buttons
+    assert_select ".gallery-page__filter", 13
+    assert_select ".gallery-page__filter--active", text: "All"
   end
 
-  test "date view is default" do
+  test "default view shows all images" do
     get gallery_url
 
-    assert_select ".gallery-page__toggle--active", text: "By Date"
-    # No month headers in date view
-    assert_select ".gallery-page__month", count: 0
+    assert_select ".gallery-page__filter--active", text: "All"
+    assert_select ".gallery-page__showing", count: 0
   end
 
-  test "month view shows month headers when there are attachments" do
-    get gallery_url(view: "month")
+  test "month filter shows filtered results" do
+    get gallery_url(month: "January")
 
-    assert_select ".gallery-page__toggle--active", text: "By Month"
-    # Month headers only appear if there are attachments
-    # This test just verifies the view mode toggle works
+    assert_select ".gallery-page__filter--active", text: "Jan"
+    assert_select ".gallery-page__showing", /January/
   end
 
   test "gallery has accessibility features" do
@@ -55,5 +54,11 @@ class GalleryControllerTest < ActionDispatch::IntegrationTest
     get gallery_url
 
     assert_select "main.layout--full"
+  end
+
+  test "gallery wrapped in article tag" do
+    get gallery_url
+
+    assert_select "article.gallery-page"
   end
 end
