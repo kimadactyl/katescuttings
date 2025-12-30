@@ -43,8 +43,8 @@ COPY . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-# Precompile assets
-RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
+# Precompile assets - always fresh to pick up stylesheet changes
+RUN rm -rf public/assets && SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
 
 # Final stage
 FROM base
