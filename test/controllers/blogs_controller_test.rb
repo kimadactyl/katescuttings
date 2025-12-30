@@ -44,4 +44,50 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  # Accessibility tests (HTML structure)
+  test "index page has skip link" do
+    get blogs_url
+
+    assert_select "a.skip-link[href='#main-content']", text: "Skip to main content"
+  end
+
+  test "index page has main content target" do
+    get blogs_url
+
+    assert_select "main#main-content"
+  end
+
+  test "navigation has aria label" do
+    get blogs_url
+
+    assert_select "nav.navigation[aria-label='Main navigation']"
+  end
+
+  test "footer has aria label" do
+    get blogs_url
+
+    assert_select "footer[aria-label='Contact information']"
+  end
+
+  test "almanac sidebar has aria label and screen reader heading" do
+    get blogs_url
+
+    assert_select ".almanac[aria-label='Browse articles by date']"
+    assert_select ".almanac h2.sr-only", text: "Browse by Date"
+  end
+
+  test "blog titles use h2 headings" do
+    get blogs_url
+
+    assert_select ".teaser h2.teaser__title"
+  end
+
+  test "month labels are paragraphs not headings" do
+    get blogs_url
+
+    assert_select "p.teaser__month"
+    # Should not have h3 or any heading for months
+    assert_select "h3.teaser__month", count: 0
+  end
 end
