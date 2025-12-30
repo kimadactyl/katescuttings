@@ -60,12 +60,13 @@ Pushes to the `main` branch automatically deploy via GitHub Actions.
 
 ## Accessibility
 
-The site includes accessibility features following WCAG 2.1 guidelines:
+The site follows WCAG 2.1 AA guidelines with automated testing via axe-core:
 
 - Skip-to-main-content link for keyboard users
 - Visible focus indicators on all interactive elements
 - ARIA labels on navigation and icon buttons
 - Semantic HTML5 landmarks (header, nav, main, footer)
+- Proper heading hierarchy
 - Alt text on all images
 
 ## Paste Cleanup
@@ -80,7 +81,8 @@ The Trix editor includes automatic cleanup for content pasted from Microsoft Wor
 ## Testing
 
 ```bash
-bin/rails test                    # Run Rails tests
+bin/rails test                    # Run unit/integration tests
+bin/rails test:system             # Run accessibility tests (axe-core)
 ```
 
 JavaScript tests run in the browser:

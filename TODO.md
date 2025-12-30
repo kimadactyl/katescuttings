@@ -7,7 +7,7 @@
 - [x] Update to Ruby 3.4.8 and Rails 8.1
 - [x] Improve initial page load performance with lazy loading images
 - [x] Add paste cleanup to Trix to strip Word HTML artifacts
-- [x] Add accessibility improvements (skip link, focus indicators, ARIA labels)
+- [x] Add accessibility improvements (skip link, focus indicators, ARIA labels, axe-core testing)
 
 ## Pending
 
