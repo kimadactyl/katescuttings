@@ -14,19 +14,25 @@
   </div>
 
   <% if @view_mode == "month" %>
+    <% index = 0 %>
     <% @attachments_by_month.each do |month_name, attachments| %>
       <h2 class="gallery-page__month"><%= month_name %></h2>
       <div class="gallery-page__masonry" data-controller="lightbox">
         <% attachments.each do |attachment| %>
-          <%= render partial: 'gallery_item', locals: { attachment: attachment } %>
+          <%= render partial: 'gallery_item', locals: { attachment: attachment, eager: index < @eager_load_count } %>
+          <% index += 1 %>
         <% end %>
       </div>
     <% end %>
   <% else %>
     <div class="gallery-page__masonry" data-controller="lightbox">
-      <% @attachments.each do |attachment| %>
-        <%= render partial: 'gallery_item', locals: { attachment: attachment } %>
+      <% @attachments.each_with_index do |attachment, index| %>
+        <%= render partial: 'gallery_item', locals: { attachment: attachment, eager: index < @eager_load_count } %>
       <% end %>
     </div>
   <% end %>
+
+  <div class="gallery-page__pagination">
+    <%= paginate @attachments %>
+  </div>
 </div>

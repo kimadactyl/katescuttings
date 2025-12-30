@@ -99,6 +99,11 @@
     background: rgba(255, 255, 255, 0.95);
     margin: 0;
   }
+
+  &__pagination {
+    margin-top: 2rem;
+    text-align: center;
+  }
 }
 
 // Lightbox caption link styling

@@ -1,4 +1,7 @@
 class GalleryController < ApplicationController
+  IMAGES_PER_PAGE = 60
+  EAGER_LOAD_COUNT = 15  # First ~3 rows load immediately
+
   def index
     @view_mode = params[:view].presence || "date"
 
@@ -11,11 +14,21 @@ class GalleryController < ApplicationController
       # Group by month name (all Decembers together, etc.), ordered by date within each month
       @attachments_by_month = base_query
         .order(Arel.sql("EXTRACT(MONTH FROM blogs.published_at) DESC, blogs.published_at DESC, attachments.id ASC"))
+        .page(params[:page])
+        .per(IMAGES_PER_PAGE)
         .group_by { |a| a.blog.published_at.strftime("%B") }
+      @attachments = base_query
+        .order(Arel.sql("EXTRACT(MONTH FROM blogs.published_at) DESC, blogs.published_at DESC, attachments.id ASC"))
+        .page(params[:page])
+        .per(IMAGES_PER_PAGE)
     else
       # Simple reverse chronological order
       @attachments = base_query
         .order(Arel.sql("blogs.published_at DESC, attachments.id ASC"))
+        .page(params[:page])
+        .per(IMAGES_PER_PAGE)
     end
+
+    @eager_load_count = EAGER_LOAD_COUNT
   end
 end
