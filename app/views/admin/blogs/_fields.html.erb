@@ -4,7 +4,7 @@
     <%= f.text_field :title, class: 'form__title', autofocus: @blog.new_record? %>
   </div>
 
-  <div class="form-section">
+  <div class="form-section" data-controller="trix-paste">
     <h3 class="form-section__title"><%= f.label :body, 'Body' %></h3>
     <%= f.rich_text_area :body %>
   </div>

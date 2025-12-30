@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word HTML Cleaner Tests</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.6;
+    }
+    h1 { margin-bottom: 0.5rem; }
+    .summary {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    .summary.pass { background: #d4edda; color: #155724; }
+    .summary.fail { background: #f8d7da; color: #721c24; }
+    .test {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    .test-header {
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .test.pass .test-header { background: #d4edda; }
+    .test.fail .test-header { background: #f8d7da; }
+    .test-details {
+      padding: 1rem;
+      background: #f8f9fa;
+      font-size: 0.875rem;
+    }
+    .test-details pre {
+      background: #fff;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .test-details h4 {
+      margin: 0.5rem 0;
+      font-size: 0.8rem;
+      color: #666;
+      text-transform: uppercase;
+    }
+    .badge {
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+    .badge.pass { background: #28a745; color: white; }
+    .badge.fail { background: #dc3545; color: white; }
+  </style>
+</head>
+<body>
+  <h1>Word HTML Cleaner Tests</h1>
+  <div id="summary" class="summary"></div>
+  <div id="results"></div>
+
+  <script type="module">
+    import { isWordHtml, cleanWordHtml } from '../../app/javascript/lib/word_html_cleaner.js';
+
+    // Test framework
+    const tests = [];
+    let passed = 0;
+    let failed = 0;
+
+    function test(name, fn) {
+      tests.push({ name, fn });
+    }
+
+    function assertEqual(actual, expected, message = '') {
+      if (actual !== expected) {
+        throw new Error(`${message}\nExpected: ${JSON.stringify(expected)}\nActual: ${JSON.stringify(actual)}`);
+      }
+    }
+
+    function assertIncludes(haystack, needle, message = '') {
+      if (!haystack.includes(needle)) {
+        throw new Error(`${message}\nExpected to include: ${JSON.stringify(needle)}\nIn: ${JSON.stringify(haystack)}`);
+      }
+    }
+
+    function assertNotIncludes(haystack, needle, message = '') {
+      if (haystack.includes(needle)) {
+        throw new Error(`${message}\nExpected NOT to include: ${JSON.stringify(needle)}\nIn: ${JSON.stringify(haystack)}`);
+      }
+    }
+
+    function assertMatch(str, pattern, message = '') {
+      if (!pattern.test(str)) {
+        throw new Error(`${message}\nExpected to match: ${pattern}\nIn: ${JSON.stringify(str)}`);
+      }
+    }
+
+    function assertNoMatch(str, pattern, message = '') {
+      if (pattern.test(str)) {
+        throw new Error(`${message}\nExpected NOT to match: ${pattern}\nIn: ${JSON.stringify(str)}`);
+      }
+    }
+
+    // ===================
+    // Tests for isWordHtml
+    // ===================
+
+    test('isWordHtml detects MsoNormal class', () => {
+      const html = '<p class="MsoNormal">Hello</p>';
+      assertEqual(isWordHtml(html), true);
+    });
+
+    test('isWordHtml detects mso- styles', () => {
+      const html = '<p style="mso-bidi-font-family: Arial">Hello</p>';
+      assertEqual(isWordHtml(html), true);
+    });
+
+    test('isWordHtml detects o:p tags', () => {
+      const html = '<p>Hello<o:p></o:p></p>';
+      assertEqual(isWordHtml(html), true);
+    });
+
+    test('isWordHtml detects Word xmlns', () => {
+      const html = '<html xmlns:w="urn:schemas-microsoft-com:office:word"><body>Hi</body></html>';
+      assertEqual(isWordHtml(html), true);
+    });
+
+    test('isWordHtml returns false for plain HTML', () => {
+      const html = '<p>Just a normal paragraph</p>';
+      assertEqual(isWordHtml(html), false);
+    });
+
+    test('isWordHtml returns false for clean rich text', () => {
+      const html = '<p><strong>Bold</strong> and <em>italic</em></p>';
+      assertEqual(isWordHtml(html), false);
+    });
+
+    // ======================
+    // Tests for cleanWordHtml
+    // ======================
+
+    test('cleanWordHtml removes MsoNormal class', () => {
+      const input = '<p class="MsoNormal">Hello World</p>';
+      const output = cleanWordHtml(input);
+      assertNotIncludes(output, 'MsoNormal');
+      assertIncludes(output, 'Hello World');
+    });
+
+    test('cleanWordHtml removes o:p tags', () => {
+      const input = '<p>Hello<o:p>&nbsp;</o:p></p>';
+      const output = cleanWordHtml(input);
+      assertNotIncludes(output, 'o:p');
+      assertIncludes(output, 'Hello');
+    });
+
+    test('cleanWordHtml removes style attributes', () => {
+      const input = '<p style="margin: 0cm; mso-pagination: widow-orphan;">Text</p>';
+      const output = cleanWordHtml(input);
+      assertNotIncludes(output, 'style=');
+      assertNotIncludes(output, 'mso-');
+      assertIncludes(output, 'Text');
+    });
+
+    test('cleanWordHtml removes conditional comments', () => {
+      const input = '<!--[if gte mso 9]><xml><w:data>test</w:data></xml><![endif]--><p>Content</p>';
+      const output = cleanWordHtml(input);
+      assertNotIncludes(output, '<!--');
+      assertNotIncludes(output, 'endif');
+      assertIncludes(output, 'Content');
+    });
+
+    test('cleanWordHtml converts b to strong', () => {
+      const input = '<p><b>Bold text</b></p>';
+      const output = cleanWordHtml(input);
+      assertNotIncludes(output, '<b>');
+      assertIncludes(output, '<strong>');
+      assertIncludes(output, 'Bold text');
+    });
+
+    test('cleanWordHtml converts i to em', () => {
+      const input = '<p><i>Italic text</i></p>';
+      const output = cleanWordHtml(input);
+      assertNotIncludes(output, '<i>');
+      assertIncludes(output, '<em>');
+      assertIncludes(output, 'Italic text');
+    });
+
+    test('cleanWordHtml removes empty spans', () => {
+      const input = '<p>Hello<span></span> World</p>';
+      const output = cleanWordHtml(input);
+      assertNoMatch(output, /<span[^>]*><\/span>/);
+    });
+
+    test('cleanWordHtml unwraps unnecessary spans', () => {
+      const input = '<p><span>Just text</span></p>';
+      const output = cleanWordHtml(input);
+      // The span should be unwrapped since it has no attributes
+      assertNotIncludes(output, '<span>');
+      assertIncludes(output, 'Just text');
+    });
+
+    test('cleanWordHtml preserves link href', () => {
+      const input = '<p><a href="https://example.com" class="MsoHyperlink">Link</a></p>';
+      const output = cleanWordHtml(input);
+      assertIncludes(output, 'href="https://example.com"');
+      assertNotIncludes(output, 'MsoHyperlink');
+    });
+
+    test('cleanWordHtml preserves image src and alt', () => {
+      const input = '<p><img src="image.jpg" alt="Test" class="MsoImage" style="width:100px"></p>';
+      const output = cleanWordHtml(input);
+      assertIncludes(output, 'src="image.jpg"');
+      assertIncludes(output, 'alt="Test"');
+      assertNotIncludes(output, 'MsoImage');
+      assertNotIncludes(output, 'style=');
+    });
+
+    test('cleanWordHtml normalizes nbsp to space', () => {
+      const input = '<p>Hello\u00A0\u00A0\u00A0World</p>';
+      const output = cleanWordHtml(input);
+      // Multiple nbsp should become single space
+      assertNoMatch(output, /\u00A0/);
+      assertIncludes(output, 'Hello World');
+    });
+
+    test('cleanWordHtml removes font tags', () => {
+      const input = '<p><font face="Arial" size="3">Styled text</font></p>';
+      const output = cleanWordHtml(input);
+      assertNotIncludes(output, '<font');
+      assertIncludes(output, 'Styled text');
+    });
+
+    test('cleanWordHtml removes style tags', () => {
+      const input = '<style>.MsoNormal { font-family: Arial; }</style><p>Content</p>';
+      const output = cleanWordHtml(input);
+      assertNotIncludes(output, '<style');
+      assertNotIncludes(output, 'MsoNormal');
+      assertIncludes(output, 'Content');
+    });
+
+    test('cleanWordHtml handles complex Word HTML', () => {
+      const input = `
+        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
+        <head>
+          <meta name="Generator" content="Microsoft Word 15">
+          <style>p.MsoNormal { margin: 0cm; }</style>
+        </head>
+        <body>
+          <p class="MsoNormal" style="margin-bottom: 0cm; line-height: normal;">
+            <span style="font-size: 12.0pt; font-family: 'Times New Roman', serif;">
+              This is a <b>test</b> paragraph.<o:p></o:p>
+            </span>
+          </p>
+          <!--[if gte mso 9]><xml><w:WordDocument></w:WordDocument></xml><![endif]-->
+        </body>
+        </html>
+      `;
+      const output = cleanWordHtml(input);
+
+      // Should not contain Word artifacts
+      assertNotIncludes(output, 'MsoNormal');
+      assertNotIncludes(output, 'mso-');
+      assertNotIncludes(output, 'o:p');
+      assertNotIncludes(output, 'xmlns');
+      assertNotIncludes(output, '<!--');
+      assertNotIncludes(output, '<style');
+      assertNotIncludes(output, '<meta');
+
+      // Should preserve content
+      assertIncludes(output, 'This is a');
+      assertIncludes(output, 'test');
+      assertIncludes(output, 'paragraph');
+
+      // Should convert b to strong
+      assertIncludes(output, '<strong>');
+    });
+
+    test('cleanWordHtml removes empty paragraphs with only nbsp', () => {
+      const input = '<p class="MsoNormal">&nbsp;</p><p class="MsoNormal">Real content</p>';
+      const output = cleanWordHtml(input);
+      assertIncludes(output, 'Real content');
+      // Empty p with just nbsp should be removed
+      assertNoMatch(output, /<p>\s*<\/p>/);
+    });
+
+    // Run tests
+    const resultsDiv = document.getElementById('results');
+    const summaryDiv = document.getElementById('summary');
+
+    for (const t of tests) {
+      let status = 'pass';
+      let error = null;
+
+      try {
+        t.fn();
+        passed++;
+      } catch (e) {
+        status = 'fail';
+        error = e;
+        failed++;
+      }
+
+      const testDiv = document.createElement('div');
+      testDiv.className = `test ${status}`;
+      testDiv.innerHTML = `
+        <div class="test-header">
+          <span>${t.name}</span>
+          <span class="badge ${status}">${status}</span>
+        </div>
+        ${error ? `
+          <div class="test-details">
+            <h4>Error</h4>
+            <pre>${error.message}</pre>
+          </div>
+        ` : ''}
+      `;
+      resultsDiv.appendChild(testDiv);
+    }
+
+    // Summary
+    const total = passed + failed;
+    summaryDiv.className = `summary ${failed === 0 ? 'pass' : 'fail'}`;
+    summaryDiv.innerHTML = `
+      <strong>${passed}/${total} tests passed</strong>
+      ${failed > 0 ? ` (${failed} failed)` : ''}
+    `;
+  </script>
+</body>
+</html>
