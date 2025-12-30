@@ -1,19 +1,44 @@
 xml.instruct! :xml, version: "1.0"
-xml.rss version: "2.0", "xmlns:atom" => "http://www.w3.org/2005/Atom" do
+xml.rss version: "2.0",
+        "xmlns:atom" => "http://www.w3.org/2005/Atom",
+        "xmlns:content" => "http://purl.org/rss/1.0/modules/content/",
+        "xmlns:media" => "http://search.yahoo.com/mrss/" do
   xml.channel do
     xml.title "Kate's Cuttings"
-    xml.description "A gardening blog by Kate Foale from Nottinghamshire, UK"
+    xml.description "Gardening tips, seasonal updates, and photos from Charnwood garden in Nottinghamshire by Kate Foale"
     xml.link root_url
     xml.language "en-gb"
+    xml.copyright "#{Date.current.year} Kate Foale"
+    xml.lastBuildDate @blogs.first&.updated_at&.to_fs(:rfc822)
     xml.tag! "atom:link", href: rss_feed_url, rel: "self", type: "application/rss+xml"
+
+    xml.image do
+      xml.url asset_url("icons/logo-tools.svg")
+      xml.title "Kate's Cuttings"
+      xml.link root_url
+    end
 
     @blogs.each do |blog|
       xml.item do
         xml.title blog.title
-        xml.description CGI.unescapeHTML(strip_tags(blog.body.to_s).truncate(500))
+        xml.description truncate(strip_tags(blog.body.to_s), length: 300, separator: " ")
+        xml.tag! "content:encoded" do
+          xml.cdata! blog.body.to_s
+        end
         xml.pubDate blog.published_at.to_fs(:rfc822)
         xml.link blog_url(blog)
-        xml.guid blog_url(blog)
+        xml.guid blog_url(blog), isPermaLink: "true"
+        xml.author "kate@katescuttings.net (Kate Foale)"
+
+        if blog.attachments.any?
+          attachment = blog.attachments.first
+          if attachment.image.attached?
+            xml.tag! "media:content",
+                     url: url_for(attachment.image.variant(resize_to_limit: [800, 800])),
+                     type: attachment.image.content_type,
+                     medium: "image"
+          end
+        end
       end
     end
   end
