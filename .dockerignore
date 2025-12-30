@@ -2,6 +2,9 @@
 .git
 .gitignore
 
+# Precompiled assets (build fresh in container)
+public/assets
+
 # Logs
 log/*
 
