@@ -6,7 +6,7 @@ A gardening blog for Kate Foale, featuring rich text editing with Action Text an
 
 ## Requirements
 
-- Ruby 3.3.6
+- Ruby 3.4.8
 - PostgreSQL 16
 
 No Node.js required - uses importmap-rails for JavaScript.
@@ -44,7 +44,7 @@ Pushes to the `main` branch automatically deploy via GitHub Actions.
 | Database   | PostgreSQL 16 (Docker container) |
 | Assets     | Propshaft + importmap-rails      |
 | JavaScript | Hotwire (Turbo + Stimulus)       |
-| Rich Text  | Action Text with Trix editor     |
+| Rich Text  | Action Text with Trix editor + paste cleanup |
 | Images     | Active Storage (local disk)      |
 | Auth       | Google OAuth (domain-restricted) |
 | Analytics  | Plausible                        |
@@ -57,6 +57,34 @@ Pushes to the `main` branch automatically deploy via GitHub Actions.
 - Open Graph and Twitter Card meta tags
 - Sitemap (`/sitemap.xml`)
 - Static pages: About Kate, The Garden, The Book
+
+## Accessibility
+
+The site includes accessibility features following WCAG 2.1 guidelines:
+
+- Skip-to-main-content link for keyboard users
+- Visible focus indicators on all interactive elements
+- ARIA labels on navigation and icon buttons
+- Semantic HTML5 landmarks (header, nav, main, footer)
+- Alt text on all images
+
+## Paste Cleanup
+
+The Trix editor includes automatic cleanup for content pasted from Microsoft Word. When Word HTML is detected, it strips:
+
+- Microsoft-specific classes (`MsoNormal`) and styles (`mso-*`)
+- Office namespace tags (`<o:p>`, `<w:*>`)
+- Conditional comments (`<!--[if gte mso 9]>`)
+- Empty wrapper elements
+
+## Testing
+
+```bash
+bin/rails test                    # Run Rails tests
+```
+
+JavaScript tests run in the browser:
+- Open `test/javascript/word_html_cleaner_test.html` in a browser
 
 ## CI/CD
 
