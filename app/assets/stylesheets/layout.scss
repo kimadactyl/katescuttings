@@ -39,6 +39,8 @@ main {
 
 .layout--full {
   max-width: none;
+  // Prevent margin collapse with first child (matches grid behavior in columns layout)
+  display: flow-root;
 }
 
 
