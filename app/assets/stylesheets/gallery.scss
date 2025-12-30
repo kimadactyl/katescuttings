@@ -29,9 +29,8 @@
       margin-right: 0.5rem;
 
       &.gallery-page__filter--active {
-        background-color: transparent;
-        text-decoration: underline;
-        text-underline-offset: 3px;
+        background-color: $primary;
+        color: $white;
       }
     }
 
