@@ -42,10 +42,20 @@
   <%= @blog.body %>
 
   <% if @blog.prev || @blog.next %>
-    <div class="blog__links">
-      <%= link_to "← Newer article", @blog.next, class: "blog__link-newer" if @blog.next %>
-      <%= link_to "Older article →", @blog.prev, class: "blog__link-older" if @blog.prev %>
-    </div>
+    <nav class="blog__nav" aria-label="Article navigation">
+      <% if @blog.next %>
+        <%= link_to @blog.next, class: "blog__nav-link blog__nav-link--newer" do %>
+          <span class="blog__nav-direction">← Newer</span>
+          <span class="blog__nav-title"><%= @blog.next.title %></span>
+        <% end %>
+      <% end %>
+      <% if @blog.prev %>
+        <%= link_to @blog.prev, class: "blog__nav-link blog__nav-link--older" do %>
+          <span class="blog__nav-direction">Older →</span>
+          <span class="blog__nav-title"><%= @blog.prev.title %></span>
+        <% end %>
+      <% end %>
+    </nav>
   <% end %>
 </article>
 
