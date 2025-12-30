@@ -31,13 +31,24 @@ class GalleryController < ApplicationController
     end
 
     @eager_load_count = EAGER_LOAD_COUNT
+
+    # HTTP caching - cache for 1 hour, revalidate based on latest attachment
+    set_cache_headers
   end
 
   private
 
   def months_from_current
-    current_month = Date.current.month
-    # Rotate months so current month is first
-    MONTHS.rotate(current_month - 1)
+    # Cache the rotated months list for the current day
+    Rails.cache.fetch("gallery_months_#{Date.current}", expires_in: 1.day) do
+      current_month = Date.current.month
+      MONTHS.rotate(current_month - 1)
+    end
+  end
+
+  def set_cache_headers
+    # Find the most recently updated attachment for cache validation
+    latest_attachment = Attachment.joins(:blog).maximum(:updated_at)
+    fresh_when(etag: [latest_attachment, @selected_month, params[:page]], last_modified: latest_attachment)
   end
 end

@@ -52,6 +52,7 @@ Pushes to the `main` branch automatically deploy via GitHub Actions.
 ## Features
 
 - Blog posts with photo galleries and lightbox viewer
+- Full gallery page (`/gallery`) with masonry layout and month filters
 - RSS feed (`/blogs.rss`)
 - JSON-LD structured data for SEO
 - Open Graph and Twitter Card meta tags

@@ -8,6 +8,7 @@
 - [x] Improve initial page load performance with lazy loading images
 - [x] Add paste cleanup to Trix to strip Word HTML artifacts
 - [x] Add accessibility improvements (skip link, focus indicators, ARIA labels, axe-core testing)
+- [x] Add gallery page with masonry layout and month filters
 
 ## Pending
 
