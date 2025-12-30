@@ -38,7 +38,8 @@ export default class extends Controller {
     if (items.length === 0) return
 
     const luminousOpts = {
-      caption: (trigger) => trigger?.dataset?.caption || ''
+      caption: (trigger) => trigger?.dataset?.caption || '',
+      onOpen: () => this.setupCaptionLinks()
     }
     const galleryOpts = {
       arrowNavigation: true
@@ -49,5 +50,17 @@ export default class extends Controller {
     } else if (items.length > 1) {
       this.galleryInstance = new window.LuminousGallery(items, galleryOpts, luminousOpts)
     }
+  }
+
+  setupCaptionLinks() {
+    // Prevent clicks on caption links from closing the lightbox
+    setTimeout(() => {
+      const captionLinks = document.querySelectorAll('.lum-lightbox-caption a')
+      captionLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.stopPropagation()
+        })
+      })
+    }, 50)
   }
 }
