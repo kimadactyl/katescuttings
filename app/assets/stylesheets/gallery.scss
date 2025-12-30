@@ -1,10 +1,6 @@
 @import "variables";
 
 .gallery-page {
-  h1 {
-    margin-top: 0;
-  }
-
   &__filters {
     display: flex;
     flex-wrap: wrap;
