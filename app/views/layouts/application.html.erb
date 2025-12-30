@@ -4,7 +4,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= render "layouts/meta_tags" %>
-    <%= auto_discovery_link_tag :rss, blogs_url(format: :rss), title: "Kate's Cuttings RSS Feed" %>
+    <%= auto_discovery_link_tag :rss, rss_feed_url, title: "Kate's Cuttings RSS Feed" %>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -55,7 +55,7 @@
         <li>Phone: 0115 9375148</li>
         <li>Email: <%= mail_to "kate@katescuttings.net" %></li>
         <li>Twitter: <%= link_to "@KatesCuttings", "https://twitter.com/KatesCuttings" %></li>
-        <li>RSS: <%= link_to "Subscribe to RSS", blogs_url(format: :rss) %></li>
+        <li>RSS: <%= link_to "Subscribe to RSS", rss_feed_url %></li>
       </ul>
       <div class="footer__created">
         © Kate Foale, 2006–<%= Date.today.year %>. All rights reserved.<br>

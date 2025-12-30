@@ -27,7 +27,7 @@ A gardening blog for Kate Foale, built with Rails. The site has been running sin
 - Static pages: About Kate, The Garden, The Book
 - Admin area at `/admin` (Google OAuth, restricted to family domains)
 - FriendlyId for SEO-friendly URLs
-- RSS feed at `/blogs.rss`
+- RSS feed at `/index.xml`
 - JSON-LD structured data on all pages
 - Plausible analytics
 

@@ -32,22 +32,22 @@ kamal logs       # Tail production logs
 kamal shell      # SSH into the app container
 ```
 
-Pushes to the `master` branch automatically deploy via GitHub Actions.
+Pushes to the `main` branch automatically deploy via GitHub Actions.
 
 ## Architecture
 
-| Component | Technology |
-|-----------|------------|
-| Hosting | Hetzner VPS |
-| CDN | Cloudflare |
-| Deployment | Kamal 2 with kamal-proxy |
-| Database | PostgreSQL 16 (Docker container) |
-| Assets | Propshaft + importmap-rails |
-| JavaScript | Hotwire (Turbo + Stimulus) |
-| Rich Text | Action Text with Trix editor |
-| Images | Active Storage (local disk) |
-| Auth | Google OAuth (domain-restricted) |
-| Analytics | Plausible |
+| Component  | Technology                       |
+| ---------- | -------------------------------- |
+| Hosting    | Hetzner VPS                      |
+| CDN        | Cloudflare                       |
+| Deployment | Kamal 2 with kamal-proxy         |
+| Database   | PostgreSQL 16 (Docker container) |
+| Assets     | Propshaft + importmap-rails      |
+| JavaScript | Hotwire (Turbo + Stimulus)       |
+| Rich Text  | Action Text with Trix editor     |
+| Images     | Active Storage (local disk)      |
+| Auth       | Google OAuth (domain-restricted) |
+| Analytics  | Plausible                        |
 
 ## Features
 
@@ -61,6 +61,7 @@ Pushes to the `master` branch automatically deploy via GitHub Actions.
 ## CI/CD
 
 GitHub Actions runs on pull requests:
+
 - Rails tests
 - Database consistency checks
 - Security audit (bundler-audit)

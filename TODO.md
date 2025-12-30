@@ -9,5 +9,4 @@
 - [ ] Data-table-ify admin
 - [ ] Add rubocop
 - [ ] Fastforward renovate stuff to avoid spam
-- [ ] Rename RSS feed to index.rss
 - [ ] Help mum migrate from Twitter to Bluesky/Mastodon + investigate site integration
