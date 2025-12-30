@@ -1,0 +1,66 @@
+// Accessibility utilities and styles
+
+// Screen reader only - visually hidden but accessible to screen readers
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Skip to main content link
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #5E0E56;
+  color: white;
+  padding: 8px 16px;
+  z-index: 100;
+  text-decoration: none;
+  font-weight: 600;
+
+  &:focus {
+    top: 0;
+  }
+}
+
+// Global focus styles
+// Using :focus-visible for keyboard-only focus indicators
+:focus-visible {
+  outline: 3px solid #5E0E56;
+  outline-offset: 2px;
+}
+
+// Remove default focus for mouse users, keep for keyboard
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// Links should have visible focus
+a:focus-visible {
+  outline: 3px solid #5E0E56;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+// Buttons should have visible focus
+button:focus-visible,
+input[type="submit"]:focus-visible {
+  outline: 3px solid #5E0E56;
+  outline-offset: 2px;
+}
+
+// Form inputs focus
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid #5E0E56;
+  outline-offset: 2px;
+  border-color: #5E0E56;
+}

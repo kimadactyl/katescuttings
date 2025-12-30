@@ -6,7 +6,8 @@
   <%= turbo_frame_tag "blogs-table" do %>
   <div class="admin-toolbar">
     <%= form_with url: admin_blogs_path, method: :get, data: { turbo_frame: "blogs-table" }, class: "admin-search" do |f| %>
-      <%= f.search_field :q, value: params[:q], placeholder: "Search posts...", class: "admin-search__input", data: { action: "input->admin-table#search" } %>
+      <%= f.label :q, "Search posts", class: "sr-only" %>
+      <%= f.search_field :q, value: params[:q], placeholder: "Search posts...", class: "admin-search__input", data: { action: "input->admin-table#search" }, "aria-label": "Search posts" %>
       <% if params[:q].present? %>
         <%= link_to "Clear", admin_blogs_path(status: params[:status]), class: "admin-search__clear", data: { turbo_frame: "blogs-table" } %>
       <% end %>
@@ -56,18 +57,19 @@
             <td><%= relative_date(blog.created_at) %></td>
             <td><%= relative_date(blog.published_at) %></td>
             <td class="admin-table__actions">
-              <%= link_to blog_path(blog), target: "_blank", title: "View post" do %>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <%= link_to blog_path(blog), target: "_blank", title: "View post", "aria-label": "View post: #{blog.title}" do %>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
               <% end %>
-              <%= link_to edit_admin_blog_path(blog), title: "Edit post", data: { turbo_frame: "_top" } do %>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              <%= link_to edit_admin_blog_path(blog), title: "Edit post", "aria-label": "Edit post: #{blog.title}", data: { turbo_frame: "_top" } do %>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
               <% end %>
               <%= button_to admin_blog_path(blog),
                             method: :delete,
                             form: { data: { turbo_confirm: 'Are you sure you want to delete this post?' } },
                             title: "Delete post",
+                            "aria-label": "Delete post: #{blog.title}",
                             class: "admin-table__delete" do %>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
               <% end %>
             </td>
           </tr>

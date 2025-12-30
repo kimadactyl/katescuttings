@@ -53,13 +53,13 @@
   &__archive {
     margin-top: 0.75rem;
     text-transform: none;
-    h5 {
-      display: inline;
-      font-size: 1rem;
-      font-weight: 600;
-      margin: 0;
-      color: $dark-grey;
-    }
+  }
+  &__archive-year {
+    display: inline;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    color: $dark-grey;
   }
   &__archive-months {
     a {
