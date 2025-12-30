@@ -1,18 +1,24 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    "group:allNonMajor"
   ],
   "schedule": [
-    "before 9am on monday"
+    "before 9am on the first day of the month"
   ],
   "timezone": "Europe/London",
-  "minimumReleaseAge": "7 days",
+  "minimumReleaseAge": "14 days",
   "prCreation": "not-pending",
   "automerge": true,
   "automergeType": "pr",
   "platformAutomerge": true,
   "packageRules": [
+    {
+      "description": "Group all non-major updates",
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "groupName": "All non-major dependencies"
+    },
     {
       "description": "Group Rails gems together",
       "groupName": "Rails",
@@ -20,15 +26,6 @@
         "/^rails$/",
         "/^action/",
         "/^active/"
-      ]
-    },
-    {
-      "description": "Group development gems",
-      "groupName": "Development dependencies",
-      "matchPackageNames": [
-        "/debug/",
-        "/rubocop/",
-        "/brakeman/"
       ]
     },
     {

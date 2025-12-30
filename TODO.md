@@ -7,6 +7,5 @@
 - [ ] Investigate accessibility improvements
 - [ ] Make back/forward buttons more exciting
 - [ ] Data-table-ify admin
-- [ ] Fastforward renovate stuff to avoid spam
 - [ ] Help mum migrate from Twitter to Bluesky/Mastodon + investigate site integration
 - [ ] Improve RSS feed
