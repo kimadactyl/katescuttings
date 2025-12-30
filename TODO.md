@@ -1,5 +1,7 @@
 # TODO
 
+See [GitHub Issues](https://github.com/kimadactyl/katescuttings/issues) for pending tasks.
+
 ## Completed
 
 - [x] Add watermarks to full-view lightbox images
@@ -9,8 +11,3 @@
 - [x] Add paste cleanup to Trix to strip Word HTML artifacts
 - [x] Add accessibility improvements (skip link, focus indicators, ARIA labels, axe-core testing)
 - [x] Add gallery page with masonry layout and month filters
-
-## Pending
-
-- [ ] Migrate to Lexxy editor when stable (37signals' Trix replacement, currently in beta)
-- [ ] Help mum migrate from Twitter to Bluesky/Mastodon + investigate site integration
