@@ -1,0 +1,123 @@
+@import "variables";
+
+.gallery-page {
+  &__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__filter {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid $light-grey;
+    border-radius: 4px;
+    text-decoration: none;
+    color: $dark-grey;
+    font-size: 0.85rem;
+    transition: background-color 0.2s, border-color 0.2s;
+
+    &:first-child {
+      font-weight: 600;
+      border-color: $primary;
+      color: $primary;
+      margin-right: 0.5rem;
+
+      &.gallery-page__filter--active {
+        background-color: $primary;
+        color: $white;
+      }
+    }
+
+    &:hover {
+      border-color: $primary;
+      color: $primary;
+    }
+
+    &--active {
+      background-color: $primary;
+      border-color: $primary;
+      color: $white;
+
+      &:hover {
+        background-color: darken($primary, 10%);
+        border-color: darken($primary, 10%);
+        color: $white;
+      }
+    }
+  }
+
+  &__showing {
+    color: $medium-grey;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+
+    strong {
+      color: $primary;
+    }
+  }
+
+  &__masonry {
+    column-count: 2;
+    column-gap: 1rem;
+
+    @include for-tablet-portrait-up {
+      column-count: 3;
+    }
+
+    @include for-tablet-landscape-up {
+      column-count: 4;
+    }
+
+    @include for-desktop-up {
+      column-count: 5;
+    }
+  }
+
+  &__item {
+    break-inside: avoid;
+    margin: 0 0 1rem;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background-color: #f0f0f0;
+    }
+
+    a.lightbox {
+      display: block;
+    }
+  }
+
+  &__caption {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+    color: $medium-grey;
+    background: rgba(255, 255, 255, 0.95);
+    margin: 0;
+  }
+
+  &__pagination {
+    margin-top: 2rem;
+    text-align: center;
+  }
+}
+
+// Lightbox caption link styling
+.lum-lightbox-caption {
+  a.lum-caption-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: inherit;
+    text-decoration: underline;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+<% provide :template, 'full' %>
+<% provide :title, "Gallery" %>
+<% provide :description, "Browse all photos from Kate's Cuttings garden blog" %>
+
+<article class="gallery-page">
+  <h1>Gallery</h1>
+
+  <nav class="gallery-page__filters" aria-label="Filter by month">
+    <%= link_to "All", gallery_path,
+        class: "gallery-page__filter #{'gallery-page__filter--active' if @selected_month.nil?}",
+        "aria-current": @selected_month.nil? ? "page" : nil %>
+    <% @months.each do |month| %>
+      <%= link_to month[0..2], gallery_path(month: month),
+          class: "gallery-page__filter #{'gallery-page__filter--active' if @selected_month == month}",
+          "aria-label": "Filter by #{month}",
+          "aria-current": @selected_month == month ? "page" : nil %>
+    <% end %>
+  </nav>
+
+  <% if @selected_month.present? %>
+    <p class="gallery-page__showing" aria-live="polite">Showing images from <strong><%= @selected_month %></strong> across all years</p>
+  <% end %>
+
+  <section class="gallery-page__masonry" aria-label="Photo gallery" data-controller="lightbox">
+    <% @attachments.each_with_index do |attachment, index| %>
+      <%= render partial: 'gallery_item', locals: { attachment: attachment, eager: index < @eager_load_count } %>
+    <% end %>
+  </section>
+
+  <% if @paginated && @attachments.respond_to?(:total_pages) && @attachments.total_pages > 1 %>
+    <nav class="gallery-page__pagination" aria-label="Gallery pagination">
+      <%= paginate @attachments %>
+    </nav>
+  <% end %>
+</article>

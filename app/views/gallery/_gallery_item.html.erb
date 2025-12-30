@@ -1,0 +1,19 @@
+<figure class="gallery-page__item">
+  <% image_description = attachment.alt_text.presence || attachment.title.presence || "Photo from #{attachment.blog.title}" %>
+  <%= link_to url_for(attachment.image.variant(resize_to_limit: [2048, 2048], watermark: true)),
+      class: 'lightbox',
+      "aria-label": "View full size: #{image_description}",
+      data: {
+        lightbox_target: 'item',
+        caption: caption_with_link(attachment),
+        blog_path: blog_path(attachment.blog)
+      } do %>
+    <%= image_tag attachment.image.variant(resize_to_limit: [300, 600]),
+        alt: image_description,
+        loading: eager ? "eager" : "lazy",
+        decoding: eager ? "sync" : "async" %>
+  <% end %>
+  <% if attachment.title.present? %>
+    <figcaption class="gallery-page__caption"><%= attachment.title %></figcaption>
+  <% end %>
+</figure>
