@@ -35,7 +35,7 @@ xml.rss version: "2.0",
           attachment = blog.attachments.first
           if attachment.image.attached?
             xml.tag! "media:content",
-                     url: url_for(attachment.image.variant(resize_to_limit: [800, 800])),
+                     url: rails_representation_url(attachment.image.variant(resize_to_limit: [800, 800])),
                      type: attachment.image.content_type,
                      medium: "image"
           end
