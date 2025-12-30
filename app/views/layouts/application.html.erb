@@ -20,9 +20,7 @@
     </script>
     <%= yield :structured_data %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/trix@2.1.12/dist/trix.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luminous-lightbox@2.4.0/dist/luminous-basic.min.css" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/luminous-lightbox@2.4.0/dist/luminous.min.js" crossorigin="anonymous"></script>
+    <script src="/javascripts/luminous.min.js"></script>
     <%= javascript_importmap_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script defer data-domain="katescuttings.net" src="https://plausible.io/js/script.js"></script>

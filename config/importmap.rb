@@ -9,6 +9,6 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 # Rails libraries
 pin "@rails/activestorage", to: "activestorage.esm.js"
 pin "@rails/actiontext", to: "actiontext.esm.js"
-pin "trix", to: "https://ga.jspm.io/npm:trix@2.1.12/dist/trix.esm.js"
+pin "trix" # vendor/javascript/trix.js
 
 # Lightbox library - loaded via script tag in layout (uses window globals)

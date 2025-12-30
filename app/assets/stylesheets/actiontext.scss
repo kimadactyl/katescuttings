@@ -1,5 +1,5 @@
 // Action Text / Trix editor styles
-// Trix base styles loaded from CDN in layout
+// Trix base styles loaded via application.css from vendor/assets/stylesheets/trix.css
 
 // Hide the attachment button in toolbar (we have our own image uploader)
 trix-toolbar .trix-button-group--file-tools,

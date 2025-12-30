@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   # SEO
   get "sitemap.xml", to: "sitemaps#show", as: :sitemap, defaults: { format: "xml" }
-  get "index.xml", to: "blogs#index", as: :rss_feed, defaults: { format: "rss" }
+  get "index.xml", to: "feeds#index", as: :rss_feed, defaults: { format: "rss" }
 
   root "blogs#index"
   resources :blogs, only: %i[show index]

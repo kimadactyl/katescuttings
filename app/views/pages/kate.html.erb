@@ -53,6 +53,6 @@
 
 <aside class="page gallery" data-controller="lightbox">
   <%= link_to image_url('pages/kate.jpg'), class: 'lightbox', data: { lightbox_target: 'item' } do %>
-    <%= image_tag 'pages/kate_small.jpg', alt: 'A photo of Kate holding two plants in her garden' %>
+    <%= image_tag 'pages/kate_small.jpg', alt: 'A photo of Kate holding two plants in her garden', loading: 'lazy', decoding: 'async' %>
   <% end %>
 </aside>

@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="lightbox"
-// Uses window.Luminous and window.LuminousGallery from CDN script
+// Uses window.Luminous and window.LuminousGallery from public/javascripts/luminous.min.js
 export default class extends Controller {
   static targets = ["item"]
 

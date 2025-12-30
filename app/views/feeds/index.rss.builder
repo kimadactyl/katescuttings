@@ -23,7 +23,8 @@ xml.rss version: "2.0",
         xml.title blog.title
         xml.description truncate(strip_tags(blog.body.to_s), length: 300, separator: " ")
         xml.tag! "content:encoded" do
-          xml.cdata! blog.body.to_s
+          # Use body.body.to_html to get raw HTML without ActionText view wrappers
+          xml.cdata! blog.body.body&.to_html.to_s
         end
         xml.pubDate blog.published_at.to_fs(:rfc822)
         xml.link blog_url(blog)
