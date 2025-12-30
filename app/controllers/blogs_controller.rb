@@ -1,12 +1,12 @@
 class BlogsController < ApplicationController
   def index
     if params["year"] && params["month"]
-      @display = 'month'
+      @display = "month"
       @blogs = Blog.in_month(params[:year], params[:month])
                    .includes(:attachments, :rich_text_body)
-      redirect_to blog_path(@blogs.first.friendly_id) if @blogs.count == 1
+      redirect_to blog_path(@blogs.first.friendly_id) if @blogs.one?
     else
-      @display = 'all'
+      @display = "all"
       @blogs = Blog.teasers
                    .includes(:attachments, :rich_text_body)
                    .page(params[:page]).per(10)
@@ -26,6 +26,6 @@ class BlogsController < ApplicationController
   end
 
   def group_teasers_by_month(blogs)
-    blogs.group_by { |b| b.published_at.strftime '%B %Y' }
+    blogs.group_by { |b| b.published_at.strftime "%B %Y" }
   end
 end

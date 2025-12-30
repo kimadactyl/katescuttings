@@ -1,6 +1,7 @@
 module ApplicationHelper
   def markdown(content)
     return "" if content.class != String
+
     options = {
       autolink: true,
       no_intra_emphasis: true,

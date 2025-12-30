@@ -1,16 +1,16 @@
-require 'net/http'
-require 'json'
-require 'base64'
+require "net/http"
+require "json"
+require "base64"
 
 namespace :alt_text do
-  ALT_TEXT_FILE = Rails.root.join('db', 'import', 'alt-text.json')
+  ALT_TEXT_FILE = Rails.root.join("db/import/alt-text.json")
   BATCH_SIZE = 10
-  CLAUDE_API_URL = URI('https://api.anthropic.com/v1/messages')
-  SITE_URL = 'https://katescuttings.net'
+  CLAUDE_API_URL = URI("https://api.anthropic.com/v1/messages")
+  SITE_URL = "https://katescuttings.net".freeze
 
   desc "Generate alt text for images using Claude's Vision API"
   task generate: :environment do
-    unless ENV['ANTHROPIC_API_KEY']
+    unless ENV["ANTHROPIC_API_KEY"]
       puts "Error: ANTHROPIC_API_KEY environment variable not set"
       exit 1
     end
@@ -49,7 +49,7 @@ namespace :alt_text do
         else
           puts "  -> Failed to generate alt text"
         end
-      rescue => e
+      rescue StandardError => e
         puts "  -> Error: #{e.message}"
       end
 
@@ -90,7 +90,7 @@ namespace :alt_text do
 
       if changes.any?
         attachment.update!(changes)
-        puts "Updated attachment #{id}: #{changes.keys.join(', ')}"
+        puts "Updated attachment #{id}: #{changes.keys.join(", ")}"
       end
     end
 
@@ -101,6 +101,7 @@ namespace :alt_text do
 
   def load_alt_texts
     return {} unless File.exist?(ALT_TEXT_FILE)
+
     JSON.parse(File.read(ALT_TEXT_FILE))
   end
 
@@ -121,39 +122,37 @@ namespace :alt_text do
     http.use_ssl = true
     response = http.get(image_uri.request_uri)
 
-    if response.code != '200'
-      raise "Failed to fetch image: #{response.code}"
-    end
+    raise "Failed to fetch image: #{response.code}" if response.code != "200"
 
     image_data = Base64.strict_encode64(response.body)
-    media_type = response['content-type'] || 'image/jpeg'
+    media_type = response["content-type"] || "image/jpeg"
 
     # Call Claude API
     http = Net::HTTP.new(CLAUDE_API_URL.host, CLAUDE_API_URL.port)
     http.use_ssl = true
 
     request = Net::HTTP::Post.new(CLAUDE_API_URL)
-    request['Content-Type'] = 'application/json'
-    request['x-api-key'] = ENV['ANTHROPIC_API_KEY']
-    request['anthropic-version'] = '2023-06-01'
+    request["Content-Type"] = "application/json"
+    request["x-api-key"] = ENV.fetch("ANTHROPIC_API_KEY", nil)
+    request["anthropic-version"] = "2023-06-01"
 
     request.body = {
-      model: 'claude-sonnet-4-20250514',
+      model: "claude-sonnet-4-20250514",
       max_tokens: 200,
       messages: [{
-        role: 'user',
+        role: "user",
         content: [
           {
-            type: 'image',
+            type: "image",
             source: {
-              type: 'base64',
+              type: "base64",
               media_type: media_type,
               data: image_data
             }
           },
           {
-            type: 'text',
-            text: 'Write a concise alt text description for this garden photograph. Focus on the main subject (plants, flowers, garden features) and include botanical names where recognizable. Keep it under 150 characters. Output only the description, no quotes or prefix.'
+            type: "text",
+            text: "Write a concise alt text description for this garden photograph. Focus on the main subject (plants, flowers, garden features) and include botanical names where recognizable. Keep it under 150 characters. Output only the description, no quotes or prefix."
           }
         ]
       }]
@@ -161,11 +160,9 @@ namespace :alt_text do
 
     response = http.request(request)
 
-    if response.code != '200'
-      raise "Claude API error: #{response.code} - #{response.body}"
-    end
+    raise "Claude API error: #{response.code} - #{response.body}" if response.code != "200"
 
     result = JSON.parse(response.body)
-    result.dig('content', 0, 'text')&.strip
+    result.dig("content", 0, "text")&.strip
   end
 end

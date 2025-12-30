@@ -1,0 +1,90 @@
+plugins:
+  - rubocop-rails
+  - rubocop-minitest
+
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+  Exclude:
+    - 'bin/**/*'
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - 'storage/**/*'
+
+# Prefer double quotes for consistency
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+# Documentation not required for all classes
+Style/Documentation:
+  Enabled: false
+
+# Allow compact style for empty methods
+Style/EmptyMethod:
+  EnforcedStyle: compact
+
+# Prefer && and || over 'and' and 'or'
+Style/AndOr:
+  EnforcedStyle: always
+
+# Frozen string literal not required
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Allow block length for specs and routes
+Metrics/BlockLength:
+  Exclude:
+    - 'config/routes.rb'
+    - 'config/environments/**/*'
+    - 'test/**/*'
+    - 'lib/tasks/**/*'
+
+# Allow constants in rake tasks
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - 'lib/tasks/**/*'
+
+# Controllers and rake tasks can be complex
+Metrics/AbcSize:
+  Exclude:
+    - 'lib/tasks/**/*'
+    - 'app/controllers/**/*'
+
+# Allow longer lines in rake tasks
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - 'config/**/*'
+    - 'db/**/*'
+    - 'lib/tasks/**/*'
+
+# Allow multiple assertions in tests
+Minitest/MultipleAssertions:
+  Enabled: false
+
+# Allow longer methods in controllers and rake tasks
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - 'db/migrate/**/*'
+    - 'lib/tasks/**/*'
+
+# Allow longer classes
+Metrics/ClassLength:
+  Max: 150
+
+# Rails-specific settings
+Rails/SkipsModelValidations:
+  Enabled: false
+
+Rails/OutputSafety:
+  Enabled: false
+
+Rails/I18nLocaleTexts:
+  Enabled: false

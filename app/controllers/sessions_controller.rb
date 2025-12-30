@@ -8,13 +8,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    auth = request.env['omniauth.auth']
+    auth = request.env["omniauth.auth"]
     email = auth.info.email
-    domain = email.split('@').last
+    domain = email.split("@").last
 
     unless ALLOWED_DOMAINS.include?(domain)
       flash[:error] = "Sorry, only family members can sign in."
-      redirect_to login_path and return
+      redirect_to(login_path) && return
     end
 
     user = User.find_or_create_by(provider: auth.provider, uid: auth.uid) do |u|

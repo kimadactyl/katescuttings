@@ -1,11 +1,12 @@
-require 'test_helper'
+require "test_helper"
 
 class BlogsHelperTest < ActionView::TestCase
   test "teaser_text strips HTML tags" do
     html = "<p>Hello <strong>world</strong></p>"
     result = teaser_text(html)
-    assert_no_match /<\/?p>/, result
-    assert_no_match /<\/?strong>/, result
+
+    assert_no_match(%r{</?p>}, result)
+    assert_no_match(%r{</?strong>}, result)
     assert_match "Hello", result
     assert_match "world", result
   end
@@ -13,7 +14,8 @@ class BlogsHelperTest < ActionView::TestCase
   test "teaser_text replaces &nbsp; with spaces" do
     html = "Hello&nbsp;world"
     result = teaser_text(html)
-    assert_no_match /&nbsp;/, result
+
+    assert_no_match(/&nbsp;/, result)
     assert_match "Hello world", strip_tags(result)
   end
 
@@ -21,7 +23,7 @@ class BlogsHelperTest < ActionView::TestCase
     html = "A" * 1000
     result = teaser_text(html, length: 100)
     # Result includes simple_format wrapper, so check the text content
-    assert strip_tags(result).length <= 103  # 100 + "..."
+    assert_operator strip_tags(result).length, :<=, 103 # 100 + "..."
   end
 
   test "teaser_text preserves paragraph breaks" do

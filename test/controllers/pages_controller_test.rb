@@ -1,8 +1,9 @@
-require 'test_helper'
+require "test_helper"
 
 class PagesControllerTest < ActionDispatch::IntegrationTest
   test "kate page includes JSON-LD structured data" do
     get kate_url
+
     assert_response :success
     assert_select "script[type='application/ld+json']", minimum: 1
     assert_match "AboutPage", response.body
@@ -11,6 +12,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
   test "garden page includes JSON-LD structured data" do
     get garden_url
+
     assert_response :success
     assert_select "script[type='application/ld+json']", minimum: 1
     assert_match "Place", response.body
@@ -19,6 +21,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
   test "book page includes JSON-LD structured data" do
     get book_url
+
     assert_response :success
     assert_select "script[type='application/ld+json']", minimum: 1
     assert_match "Book", response.body

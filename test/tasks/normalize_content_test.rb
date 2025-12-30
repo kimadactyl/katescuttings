@@ -16,6 +16,7 @@ class NormalizeContentTest < ActiveSupport::TestCase
     Rake::Task["content:normalize"].invoke
 
     @blog.reload
+
     assert_includes @blog.body.body.to_html, "<p>"
     assert_not_includes @blog.body.body.to_html, "<div>First"
   end
@@ -30,6 +31,7 @@ class NormalizeContentTest < ActiveSupport::TestCase
 
     @blog.reload
     html = @blog.body.body.to_html
+
     assert_not_includes html, "<p>&nbsp;</p>"
     assert_not_includes html, "<div>&nbsp;</div>"
   end
@@ -43,6 +45,7 @@ class NormalizeContentTest < ActiveSupport::TestCase
 
     @blog.reload
     html = @blog.body.body.to_html
+
     assert_not_includes html, "<br><br></p>"
   end
 
@@ -55,6 +58,7 @@ class NormalizeContentTest < ActiveSupport::TestCase
     Rake::Task["content:normalize"].invoke
 
     @blog.reload
+
     assert_includes @blog.body.body.to_html, "<p>Already proper paragraph</p>"
   end
 end
