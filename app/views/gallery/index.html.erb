@@ -1,0 +1,32 @@
+<% provide :template, 'full' %>
+<% provide :title, "Gallery" %>
+<% provide :description, "Browse all photos from Kate's Cuttings garden blog" %>
+
+<div class="gallery-page">
+  <div class="gallery-page__header">
+    <h1>Gallery</h1>
+    <div class="gallery-page__controls">
+      <%= link_to "By Date", gallery_path(view: "date"),
+          class: "gallery-page__toggle #{'gallery-page__toggle--active' if @view_mode == 'date'}" %>
+      <%= link_to "By Month", gallery_path(view: "month"),
+          class: "gallery-page__toggle #{'gallery-page__toggle--active' if @view_mode == 'month'}" %>
+    </div>
+  </div>
+
+  <% if @view_mode == "month" %>
+    <% @attachments_by_month.each do |month_name, attachments| %>
+      <h2 class="gallery-page__month"><%= month_name %></h2>
+      <div class="gallery-page__masonry" data-controller="lightbox">
+        <% attachments.each do |attachment| %>
+          <%= render partial: 'gallery_item', locals: { attachment: attachment } %>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="gallery-page__masonry" data-controller="lightbox">
+      <% @attachments.each do |attachment| %>
+        <%= render partial: 'gallery_item', locals: { attachment: attachment } %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
