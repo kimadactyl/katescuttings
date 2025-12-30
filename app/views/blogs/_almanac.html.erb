@@ -1,6 +1,7 @@
 <% cache @almanac do %>
   <% cutoff_year = (Date.today.year - 5).to_s %>
-  <aside class="layout__aside almanac">
+  <aside class="layout__aside almanac" aria-label="Browse articles by date">
+    <h2 class="sr-only">Browse by Date</h2>
     <% @almanac.each do |year| %>
       <% if year[0] >= cutoff_year %>
         <%# Recent years: show with images %>
@@ -23,7 +24,7 @@
           <h3 class="almanac__earlier">Earlier</h3>
         <% end %>
         <div class="almanac__archive">
-          <h5><%= year[0] %>:</h5>
+          <h4 class="almanac__archive-year"><%= year[0] %>:</h4>
           <span class="almanac__archive-months">
             <% year[1].sort_by { |m| m[0][1].to_i }.each_with_index do |month, index| %>
               <%= link_to Date::ABBR_MONTHNAMES[month[0][1].to_i], blogs_path(year: year[0], month: month[0][1]) %><% if index < year[1].length - 1 %>,<% end %>
