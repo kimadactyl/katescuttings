@@ -1,8 +1,11 @@
 # TODO
 
+## Completed
+
+- [x] Add watermarks to full-view lightbox images
+
 ## Pending
 
-- [ ] Investigate watermarks for full-view images
 - [ ] Investigate modern alternatives to Trix editor - perhaps something with a Markdown backend to help typography standardisation
 - [ ] Investigate accessibility improvements
 - [ ] Data-table-ify admin
