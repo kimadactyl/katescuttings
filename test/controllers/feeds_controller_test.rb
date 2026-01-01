@@ -56,4 +56,31 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
       assert item.at_xpath("guid"), "RSS item missing guid"
     end
   end
+
+  test "RSS feed uses proxy URLs for images instead of redirect URLs" do
+    # Create a blog with an image attachment
+    blog = blogs(:spring_garden)
+    blog.attachments.create!(
+      title: "Test Image",
+      alt_text: "A test image",
+      image: fixture_file_upload("test_image.png", "image/png")
+    )
+
+    get rss_feed_url
+
+    assert_response :success
+    doc = Nokogiri::XML(response.body)
+
+    # Find the media:content elements
+    media_contents = doc.xpath("//item/*[local-name()='content' and namespace-uri()='http://search.yahoo.com/mrss/']")
+    assert media_contents.any?, "RSS feed should have media:content elements for posts with images"
+
+    # Verify URLs use proxy instead of redirect (RSS readers often don't follow redirects)
+    media_contents.each do |media|
+      url = media["url"]
+      assert url.present?, "media:content should have a url attribute"
+      assert_match %r{/representations/proxy/}, url, "Image URLs should use proxy path, not redirect"
+      assert_no_match %r{/representations/redirect/}, url, "Image URLs should not use redirect path"
+    end
+  end
 end
