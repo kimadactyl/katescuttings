@@ -34,8 +34,13 @@ xml.rss version: "2.0",
         if blog.attachments.any?
           attachment = blog.attachments.first
           if attachment.image.attached?
+            # Use proxy URL instead of redirect - RSS readers often don't follow redirects
+            variant = attachment.image.variant(resize_to_limit: [800, 800])
+            # Get the redirect URL and convert to proxy URL
+            redirect_url = rails_representation_url(variant)
+            proxy_url = redirect_url.sub("/representations/redirect/", "/representations/proxy/")
             xml.tag! "media:content",
-                     url: rails_representation_url(attachment.image.variant(resize_to_limit: [800, 800])),
+                     url: proxy_url,
                      type: attachment.image.content_type,
                      medium: "image"
           end
