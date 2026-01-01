@@ -121,6 +121,16 @@ class Admin::BlogsControllerTest < ActionDispatch::IntegrationTest
     assert_select "form"
   end
 
+  test "new form has direct upload configured on file input" do
+    log_in_as(@user)
+    get new_admin_blog_url
+
+    assert_response :success
+    # Verify the file input has the data-direct-upload-url attribute
+    # This proves direct_upload: true is set on the form field
+    assert_select "input[type='file'][data-direct-upload-url]"
+  end
+
   test "create redirects to index on success" do
     log_in_as(@user)
 
@@ -136,6 +146,7 @@ class Admin::BlogsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_blogs_path
     assert_equal "Successfully created new blog", flash[:success]
   end
+
 
   # Edit/Update tests
   test "edit displays form" do
