@@ -14,3 +14,8 @@ scheduled_post:
   title: Upcoming Winter Tips
   slug: upcoming-winter-tips
   published_at: <%= 1.week.from_now.to_fs(:db) %>
+
+apostrophe_post:
+  title: "It's rose time and we've been busy"
+  slug: its-rose-time
+  published_at: <%= 3.days.ago.to_fs(:db) %>

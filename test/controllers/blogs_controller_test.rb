@@ -90,4 +90,55 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
     # Should not have h3 or any heading for months
     assert_select "h3.teaser__month", count: 0
   end
+
+  test "JSON-LD is valid when title contains apostrophes" do
+    blog = blogs(:apostrophe_post)
+    get blog_url(blog)
+
+    assert_response :success
+
+    # Extract JSON-LD from page - find the BlogPosting one (not WebSite from layout)
+    doc = Nokogiri::HTML(response.body)
+    json_ld_scripts = doc.css('script[type="application/ld+json"]')
+
+    blog_posting_json = nil
+    json_ld_scripts.each do |script|
+      json_data = JSON.parse(script.content)
+      if json_data["@type"] == "BlogPosting"
+        blog_posting_json = json_data
+        break
+      end
+    end
+
+    assert blog_posting_json, "Page should have BlogPosting JSON-LD"
+    assert_equal blog.title, blog_posting_json["headline"]
+    assert_includes blog_posting_json["headline"], "'"
+  end
+
+  test "JSON-LD on index is valid when posts contain apostrophes" do
+    get blogs_url
+
+    assert_response :success
+
+    # Extract JSON-LD from page - find the Blog one with blogPost array
+    doc = Nokogiri::HTML(response.body)
+    json_ld_scripts = doc.css('script[type="application/ld+json"]')
+    assert json_ld_scripts.any?, "Page should have JSON-LD scripts"
+
+    blog_json = nil
+    json_ld_scripts.each do |script|
+      json_data = JSON.parse(script.content)
+      if json_data["@type"] == "Blog" && json_data["blogPost"]
+        blog_json = json_data
+        break
+      end
+    end
+
+    assert blog_json, "Page should have Blog JSON-LD with blogPost array"
+
+    # Check posts with apostrophes can be parsed
+    blog_json["blogPost"].each do |post|
+      assert post["headline"].is_a?(String)
+    end
+  end
 end
