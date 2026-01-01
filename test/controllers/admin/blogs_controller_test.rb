@@ -121,6 +121,16 @@ class Admin::BlogsControllerTest < ActionDispatch::IntegrationTest
     assert_select "form"
   end
 
+  test "new form has direct upload configured on file input" do
+    log_in_as(@user)
+    get new_admin_blog_url
+
+    assert_response :success
+    # Verify the file input has the data-direct-upload-url attribute
+    # This proves direct_upload: true is set on the form field
+    assert_select "input[type='file'][data-direct-upload-url]"
+  end
+
   test "create redirects to index on success" do
     log_in_as(@user)
 
@@ -136,6 +146,32 @@ class Admin::BlogsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_blogs_path
     assert_equal "Successfully created new blog", flash[:success]
   end
+
+  test "create with image attachment saves the attachment" do
+    log_in_as(@user)
+
+    assert_difference(["Blog.count", "Attachment.count"], 1) do
+      post admin_blogs_url, params: {
+        blog: {
+          title: "Post With Image",
+          published_at: Time.current,
+          attachments_attributes: {
+            "0" => {
+              title: "Test Caption",
+              alt_text: "Test alt text",
+              image: fixture_file_upload("test_image.png", "image/png")
+            }
+          }
+        }
+      }
+    end
+
+    blog = Blog.find_by(title: "Post With Image")
+    assert_equal 1, blog.attachments.count
+    assert_equal "Test Caption", blog.attachments.first.title
+    assert blog.attachments.first.image.attached?
+  end
+
 
   # Edit/Update tests
   test "edit displays form" do
@@ -157,6 +193,28 @@ class Admin::BlogsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_blogs_path
     assert_equal "Post updated", flash[:success]
     assert_equal "Updated Title", @blog.reload.title
+  end
+
+  test "update with new image attachment saves the attachment" do
+    log_in_as(@user)
+    initial_count = @blog.attachments.count
+
+    assert_difference("Attachment.count", 1) do
+      patch admin_blog_url(@blog), params: {
+        blog: {
+          attachments_attributes: {
+            "0" => {
+              title: "New Image",
+              alt_text: "New alt text",
+              image: fixture_file_upload("test_image.png", "image/png")
+            }
+          }
+        }
+      }
+    end
+
+    assert_redirected_to admin_blogs_path
+    assert_equal initial_count + 1, @blog.reload.attachments.count
   end
 
   # Pagination tests
