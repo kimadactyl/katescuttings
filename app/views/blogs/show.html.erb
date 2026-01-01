@@ -14,7 +14,7 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "<%= j @blog.title %>",
+  "headline": <%= raw @blog.title.to_json %>,
   "datePublished": "<%= @blog.published_at.iso8601 %>",
   "dateModified": "<%= @blog.updated_at.iso8601 %>",
   "author": {
@@ -26,7 +26,7 @@
     "name": "Kate's Cuttings",
     "url": "https://katescuttings.net"
   },
-  "description": "<%= j truncate(CGI.unescapeHTML(strip_tags(@blog.body.to_s)), length: 300, separator: ' ') %>"<% if @blog.attachments.any? %>,
+  "description": <%= raw truncate(CGI.unescapeHTML(strip_tags(@blog.body.to_s)), length: 300, separator: ' ').to_json %><% if @blog.attachments.any? %>,
   "image": "<%= main_app.url_for(@blog.attachments.first.image.variant(resize_to_limit: [1024, 1024]).processed) %>"<% end %>
 }
 </script>
