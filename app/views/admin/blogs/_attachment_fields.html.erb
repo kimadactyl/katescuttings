@@ -15,8 +15,8 @@
         <img class="attachment-card__preview" style="display: none;">
       <% end %>
       <%= f.file_field :image,
-          direct_upload: true,
           accept: 'image/*',
+          direct_upload: true,
           class: 'attachment-card__input',
           data: { action: 'change->attachments#preview' } %>
     </div>
