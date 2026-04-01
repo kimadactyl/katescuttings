@@ -64,7 +64,7 @@ group :test do
   gem "capybara", ">= 3.26"
   gem "selenium-webdriver", ">= 4.11"
   # Pin minitest for Rails 8 compatibility
-  gem "minitest", "~> 5.25"
+  gem "minitest", "~> 6.0"
   # Accessibility testing with axe-core
   gem "axe-core-capybara"
 end
