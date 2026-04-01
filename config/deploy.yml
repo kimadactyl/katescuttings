@@ -9,6 +9,8 @@ servers:
   web:
     hosts:
       - 95.217.189.128
+    options:
+      memory: 512m
 
 # SSL via Let's Encrypt
 proxy:
@@ -56,7 +58,7 @@ accessories:
   db:
     image: postgres:16
     host: 95.217.189.128
-    port: 5432
+    port: "127.0.0.1:5432:5432"
     env:
       clear:
         POSTGRES_DB: katescuttings_production
@@ -64,6 +66,8 @@ accessories:
         - POSTGRES_PASSWORD
     directories:
       - data:/var/lib/postgresql/data
+    options:
+      memory: 512m
 
 # Useful aliases
 aliases:
