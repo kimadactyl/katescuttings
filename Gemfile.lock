@@ -145,7 +145,7 @@ GEM
       fiber-local (~> 1.1)
       json
     crass (1.0.6)
-    database_consistency (2.1.1)
+    database_consistency (3.0.2)
       activerecord (>= 3.2)
     date (3.5.1)
     debug_inspector (1.2.0)
@@ -249,7 +249,7 @@ GEM
     jbuilder (2.14.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (2.18.1)
+    json (2.19.3)
     jwt (3.1.2)
       base64
     kamal (2.10.1)
