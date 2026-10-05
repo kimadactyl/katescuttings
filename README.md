@@ -6,7 +6,7 @@ A gardening blog for Kate Foale, featuring rich text editing with Action Text an
 
 ## Requirements
 
-- Ruby 3.4.8
+- Ruby 3.4.10
 - PostgreSQL 16
 
 No Node.js required - uses importmap-rails for JavaScript.
